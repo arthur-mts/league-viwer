@@ -1,19 +1,9 @@
-import requests
-
-
 class Summoner(object):
-    def __init__(self, name, level, idi):
-        self.name = name
-        self.level = level
-        self.idi = idi
-
-def SummonertoString(sumon):
-    return "Nome: "+str(sumon.name) +", Level: "+str(sumon.level)+", ID: "+str(sumon.idi)
+    def __init__(self, initial_dict):
+        for key in initial_dict:
+            setattr(self, key, initial_dict[key])
 
 
-def json_to_summoner(json_res):
-    json_res = dict(json_res)
-    name = json_res["name"]
-    idi = json_res["id"]
-    level = json_res["summonerLevel"]
-    return Summoner(name, level, idi)
+def SummonerToString(sumn):
+    res = "Nome: "+sumn.name + "\nLevel: "+ str(sumn.summonerLevel)
+    return res
