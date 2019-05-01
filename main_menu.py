@@ -50,7 +50,7 @@ def menu(op):
 
 
 minhaKey = "0"
-print("---League-Coach---")
+print("---league-viwer---")
 print("author: Arthur Mauricio")
 print("github: https://github.com/punisher077")
 while True:
