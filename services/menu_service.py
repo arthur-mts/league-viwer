@@ -25,11 +25,13 @@ def serverStatus(key):
 
 def championByName(name, key):
     generateJsonChamps()
-    if not name in jsonchamps["data"]:
-        return "ERRO"
-    else:
-        champ = champwatcher.Champion(jsonchamps["data"][name])
-        return champ
+    find, champ = False, 0
+    for j in jsonchamps["data"].keys():
+        if(name.upper() == j.upper()):
+            champ = champwatcher.Champion(jsonchamps["data"][name])
+            find = True
+    return champ if (find) else "ERRO"
+
 
 
 def mostPlayedChampions(sumn_id, key):
