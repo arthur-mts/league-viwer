@@ -1,8 +1,12 @@
-import requests, json
-print("~~LEAGUE COACH~~\nBy: punihser077")
-token = "RGAPI-7755cba1-3ad5-4ae1-9409-7815c284a46c"
-regiao = "br1"
-invocador = str(input("Digite o seu nickname:"))
-url = "https://br1.api.riotgames.com/lol/summoner/v4/summoners/by-name/"+invocador+"?api_key="+token
-res = requests.get(url).json()
-print(res)
+from tkinter import *
+from tkinter import messagebox
+
+top = Tk()
+
+C = Canvas(top, bg="blue", height=250, width=300)
+filename = PhotoImage(file="/home/amts/Imagens/modk.png")
+background_label = Label(top, image=filename)
+background_label.place(x=0, y=0, relwidth=1, relheight=1)
+
+C.pack()
+top.mainloop()

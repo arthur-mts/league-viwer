@@ -3,14 +3,7 @@ from classes import userwatcher
 from services import menu_service
 from classes import champwatcher
 
-def validarKey(key):
-    req = requests.get("https://br1.api.riotgames.com/lol/status/v3/shard-data?api_key="+key).json()
-    if("status" in req):
-        print("\033[91mChave invalida, tente novamente!\033[0m")
-        return False
-    else:
-        print("Chave validada!")
-        return True
+
 
 def menu(op):
     summner = 0
@@ -72,6 +65,5 @@ while True:
     print("0- Sair\n"+ txtInv+"\n2- Status do Server\n3- Buscar informações de campeão\n4- Detalhes de partida\n5- Campeão mais jogado\n6- Dados do invocador")
     op = int(input("Digite uma opção: "))
     menu(op)
-    #sumoner = userwatcher.json_to_summoner(service.urlSummonerByName("Yoda"))
 #print(userwatcher.SummonertoString(sumoner))
-#URL DO JSON DOS CHAMPS: http://ddragon.leagueoflegends.com/cdn/9.8.1/data/pt_BR/champion.json
+# URL DO JSON DOS CHAMPS: http://ddragon.leagueoflegends.com/cdn/9.10.1/data/pt_BR/champion.json
