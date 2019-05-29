@@ -1,7 +1,7 @@
 import json
 from tkinter import *
 from services import menu_service
-
+from PIL import ImageTk, Image
 
 class MenuAut:
     def __init__(self, root):
@@ -9,9 +9,15 @@ class MenuAut:
         self.container = Frame(root)
         self.container["pady"] = 10
         self.container.pack()
-        self.titulo = Label(self.container, text="League Viwer")
-        self.titulo["font"] = ("Arial", "30", "bold")
-        self.titulo.pack()
+        # Redimensionando logo
+        img = Image.open('../src/img/lol_logo.png')
+        width, height = img.size
+        img = img.resize((width // 2, height // 2), Image.ANTIALIAS)
+        self.logoImg = ImageTk.PhotoImage(img)
+
+        self.painel = Label(self.container, image=self.logoImg)
+        self.painel.image = self.logoImg
+        self.painel.pack()
 
         try:
             with open("../dados.json") as r:
