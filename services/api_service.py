@@ -1,5 +1,5 @@
 import urllib.request
-from leagueviwer.classes import userwatcher, champwatcher
+from classes import userwatcher, champwatcher
 from tkinter import *
 from PIL import Image, ImageTk
 
@@ -10,4 +10,3 @@ def iconeInv(inv):
     print(url)
     img = urllib.request.urlopen(url)
     return Image.open(img)
-    

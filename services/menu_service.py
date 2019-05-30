@@ -1,6 +1,6 @@
 import requests
-from leagueviwer.classes import userwatcher
-from leagueviwer.classes import champwatcher
+from classes import userwatcher
+from classes import champwatcher
 url = "https://br1.api.riotgames.com/lol/"
 jsonchamps = 0
 

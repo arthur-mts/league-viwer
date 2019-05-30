@@ -1,6 +1,6 @@
 import json
 from tkinter import *
-from leagueviwer.services import menu_service, api_service
+from services import menu_service, api_service
 from PIL import ImageTk, Image
 
 
@@ -64,15 +64,11 @@ class MenuAut:
         self.botaoAut = Button(self.container3, text="Autenticar")
         self.botaoAut["command"] = self.actionAutenticar
         self.botaoAut.pack(side=TOP)
-
-    def renderOpcoes(self):
-        # self.container2 = Frame(self.root, width=100, height=300)
-        self.container2 = Frame(self.root, highlightbackground="red", highlightcolor="red", highlightthickness=1, bd=0,
-                                pady=20, padx=20)
-        self.container2.pack(expand=False, side=LEFT)
-
-        self.labelInvocador = Frame(self.container2)
+    
+    def renderInvocador(self, container, invoc):
+        self.labelInvocador = Frame(container)
         self.labelInvocador.pack(side=LEFT)
+
         
 
         invoc = menu_service.summonerByName("0 Fígurante", self.key)
@@ -84,9 +80,6 @@ class MenuAut:
         self.imgIcon  = ImageTk.PhotoImage(icon)
     
 
-
-
-
         self.labelInvocador.pack(side=LEFT)
 
 
@@ -94,8 +87,41 @@ class MenuAut:
         self.labelIcon.image = self.imgIcon
         self.labelIcon.pack(side=LEFT)
         
-        self.labelNomeInv = Label(self.labelInvocador, text="Invocador", font="termite 15 bold")
+        self.labelNomeInv = Label(self.labelInvocador, text="0 Fígurante", font="termite 15 bold")
         self.labelNomeInv.pack(side=RIGHT)
+
+
+    def renderOpcoes(self):
+        self.container2 = Frame(self.root, highlightbackground="red", highlightcolor="red", highlightthickness=1, bd=0,
+                                pady=20, padx=20)
+        self.container2.pack(expand=False)
+
+        self.labelInvocador = Frame(self.container2)
+        self.labelInvocador.pack(side=LEFT)
+
+        
+
+        #invoc = menu_service.summonerByName("0 Fígurante", self.key)
+
+        #icon = api_service.iconeInv(invoc)
+
+        #width, height = icon.size
+        #icon = icon.resize((width // 4, height // 4), Image.ANTIALIAS)
+        #self.imgIcon  = ImageTk.PhotoImage(icon)
+    
+
+
+
+
+        #self.labelInvocador.pack(side=LEFT)
+
+
+        #self.labelIcon = Label(self.labelInvocador, image=self.imgIcon)
+        #self.labelIcon.image = self.imgIcon
+        #self.labelIcon.pack(side=LEFT)
+        
+        #self.labelNomeInv = Label(self.labelInvocador, text="0 Fígurante", font="termite 15 bold")
+        #self.labelNomeInv.pack(side=RIGHT)
 
 
 
