@@ -1,6 +1,6 @@
 import json
 from tkinter import *
-from services import menu_service
+from leagueviwer.services import menu_service, api_service
 from PIL import ImageTk, Image
 
 
@@ -29,6 +29,7 @@ class MenuAut:
             self.validado = False
 
         if self.validado:
+            self.key = self.arquivo["senha"]
             self.renderOpcoes()
         else:
             self.renderAutenticar()
@@ -72,15 +73,30 @@ class MenuAut:
 
         self.labelInvocador = Frame(self.container2)
         self.labelInvocador.pack(side=LEFT)
+        
 
-        icon = Image.open('../src/img/icon_teste.png')
-        self.imgIcon = ImageTk.PhotoImage(icon)
+        invoc = menu_service.summonerByName("0 Fígurante", self.key)
+
+        icon = api_service.iconeInv(invoc)
+
+        width, height = icon.size
+        icon = icon.resize((width // 4, height // 4), Image.ANTIALIAS)
+        self.imgIcon  = ImageTk.PhotoImage(icon)
+    
+
+
+
+
+        self.labelInvocador.pack(side=LEFT)
+
+
         self.labelIcon = Label(self.labelInvocador, image=self.imgIcon)
         self.labelIcon.image = self.imgIcon
         self.labelIcon.pack(side=LEFT)
-
+        
         self.labelNomeInv = Label(self.labelInvocador, text="Invocador", font="termite 15 bold")
         self.labelNomeInv.pack(side=RIGHT)
+
 
 
 

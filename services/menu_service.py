@@ -1,14 +1,12 @@
 import requests
-from classes import userwatcher
-from classes import champwatcher
+from leagueviwer.classes import userwatcher
+from leagueviwer.classes import champwatcher
 url = "https://br1.api.riotgames.com/lol/"
 jsonchamps = 0
 
 
 def validarKey(key):
-    print(key)
     req = requests.get("https://br1.api.riotgames.com/lol/status/v3/shard-data?api_key=" + key).json()
-    print(req)
     return not "status" in req
 
 def generateJsonChamps():

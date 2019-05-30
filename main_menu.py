@@ -4,7 +4,6 @@ from services import menu_service
 from classes import champwatcher
 
 
-
 def menu(op):
     summner = 0
     if (op == 0):
@@ -52,7 +51,7 @@ minhaKey = "0"
 print("\033[1m---LEAGUE-VIWER---\nauthor: Arthur Mauricio\ngithub: https://github.com/punisher077\033[0m")
 while True:
     apiKey = str(input("Digite a sua api key para realizar as consultas:"))
-    valido = validarKey(apiKey)
+    valido = menu_service.validarKey(apiKey)
     if(valido):
         minhaKey = apiKey
         break
