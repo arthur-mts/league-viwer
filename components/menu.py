@@ -3,19 +3,21 @@ from tkinter import *
 from services import menu_service
 from PIL import ImageTk, Image
 
+
 class MenuAut:
     def __init__(self, root):
         self.root = root
-        self.container = Frame(root)
-        self.container["pady"] = 10
+        self.container = Frame(root, highlightbackground="red", highlightcolor="red", highlightthickness=1, bd=0)
         self.container.pack()
+
         # Redimensionando logo
         img = Image.open('../src/img/lol_logo.png')
         width, height = img.size
         img = img.resize((width // 2, height // 2), Image.ANTIALIAS)
         self.logoImg = ImageTk.PhotoImage(img)
 
-        self.painel = Label(self.container, image=self.logoImg)
+        self.painel = Label(self.container, image=self.logoImg, highlightbackground="red", highlightcolor="red",
+                            highlightthickness=1, bd=0)
         self.painel.image = self.logoImg
         self.painel.pack()
 
@@ -63,16 +65,31 @@ class MenuAut:
         self.botaoAut.pack(side=TOP)
 
     def renderOpcoes(self):
-        self.container2 = Frame(self.root)
-        self.container2["pady"] = 10
-        self.container2.pack()
-        self.textoOps = Label(self.container2, text="Ver invocador etc")
-        self.textoOps.pack(side=LEFT)
+        # self.container2 = Frame(self.root, width=100, height=300)
+        self.container2 = Frame(self.root, highlightbackground="red", highlightcolor="red", highlightthickness=1, bd=0,
+                                pady=20, padx=20)
+        self.container2.pack(expand=False, side=LEFT)
+
+        self.labelInvocador = Frame(self.container2)
+        self.labelInvocador.pack(side=LEFT)
+
+        icon = Image.open('../src/img/icon_teste.png')
+        self.imgIcon = ImageTk.PhotoImage(icon)
+        self.labelIcon = Label(self.labelInvocador, image=self.imgIcon)
+        self.labelIcon.image = self.imgIcon
+        self.labelIcon.pack(side=LEFT)
+
+        self.labelNomeInv = Label(self.labelInvocador, text="Invocador", font="termite 15 bold")
+        self.labelNomeInv.pack(side=RIGHT)
+
+
 
 
 
 root = Tk()
 root.title("League Viwer")
+
+root.geometry("700x500")
+root.update()
 MenuAut(root)
 root.mainloop()
-

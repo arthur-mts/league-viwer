@@ -66,4 +66,8 @@ while True:
     op = int(input("Digite uma opção: "))
     menu(op)
 #print(userwatcher.SummonertoString(sumoner))
-# URL DO JSON DOS CHAMPS: http://ddragon.leagueoflegends.com/cdn/9.10.1/data/pt_BR/champion.json
+# URL DO JSON DOS CHAMPS: http://ddragon.leagueoflegends.com/cdn/9.11.1/data/pt_BR/champion.json
+
+# URL DAS SPLASH https://ddragon.leagueoflegends.com/cdn/img/champion/splash/AurelionSol_0.jpg
+
+# URL DOS ICONES https://ddragon.leagueoflegends.com/cdn/img/champion/tiles/AurelionSol_0.jpg
