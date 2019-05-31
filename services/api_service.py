@@ -18,9 +18,14 @@ def checarInvSalvo():
     try:
         with open("../src/dados/inv.json", "r") as r:
             arquivo = json.load(r)
-            invoc = arquivo["invocador"]
-            return userwatcher.Summoner(invoc)
     except:
+        return False
+    if "invocador" in arquivo.keys():
+        invoc = json.loads(arquivo["invocador"])
+        cinv = userwatcher.Summoner(invoc)
+        print(cinv)
+        return cinv
+    else:
         return False
 
 def salvarInv(inv):

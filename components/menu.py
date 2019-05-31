@@ -73,6 +73,7 @@ class MenuAut:
         self.container2.pack(side = LEFT)
 
         self.invocador = api_service.checarInvSalvo()
+        print(self.invocador)
         if(self.invocador):
             self.renderInvocador()
         else:
@@ -82,48 +83,32 @@ class MenuAut:
 
             
     def renderInvocador(self):
+        self.container2.destroy()
+        self.container2 = Frame(self.root, highlightbackground="red", highlightcolor="red", highlightthickness=1, pady = 20)
+
+
         icon = api_service.iconeInv(self.invocador)
         width, height = icon.size
         icon = icon.resize((width // 4, height // 4), Image.ANTIALIAS)
         self.imgIcon  = ImageTk.PhotoImage(icon)
 
-        nomeInv = getattr("name", self.invocador)
-        self.labelInvocador = Label(self.container2, image=self.imgIcon, text = nomeInv)
-        self.labelInvocador.pack(side=LEFT)
+
+        nomeInv = getattr(self.invocador, "name")
+        self.labelInvocador = Label(self.container2, image=self.imgIcon, text = nomeInv, font="termite 15 bold")
+        self.labelInvocador.image = self.imgIcon
+        self.labelInvocador.pack(side=RIGHT)
         
 
-        #self.labelIcon = Label(self.labelInvocador, image=self.imgIcon)
-        #self.labelIcon.image = self.imgIcon
-        #self.labelIcon.pack(side=LEFT)
         
-        #self.labelNomeInv = Label(self.labelInvocador, text="0 Fígurante", font="termite 15 bold")
-        #self.labelNomeInv.pack(side=RIGHT)
 
        
 
         
 
-        #invoc = menu_service.summonerByName("0 Fígurante", self.key)
-
-        #icon = api_service.iconeInv(invoc)
-
-        #width, height = icon.size
-        #icon = icon.resize((width // 4, height // 4), Image.ANTIALIAS)
-        #self.imgIcon  = ImageTk.PhotoImage(icon)
-    
 
 
 
-
-        #self.labelInvocador.pack(side=LEFT)
-
-
-        #self.labelIcon = Label(self.labelInvocador, image=self.imgIcon)
-        #self.labelIcon.image = self.imgIcon
-        #self.labelIcon.pack(side=LEFT)
         
-        #self.labelNomeInv = Label(self.labelInvocador, text="0 Fígurante", font="termite 15 bold")
-        #self.labelNomeInv.pack(side=RIGHT)
 
     def renderSalvarInvocador(self):
         
@@ -160,6 +145,7 @@ class MenuAut:
             self.botaoSalvar["bg"] = "green"
             self.botaoSalvar["text"] = "Salvo!"
             api_service.salvarInv(invoc)
+            self.renderInvocador()
             
 
 
