@@ -18,9 +18,11 @@ def summonerByName(name, key):
     end = "summoner/v4/summoners/by-name/"+name+"?api_key="+key
     res = requests.get(url+end).json()
     if("status" in res.keys()):
+        print("aa")
         return "ERRO"
     else:
         summner = userwatcher.Summoner(res)
+        print(summner)
         return summner
 
 def serverStatus(key):

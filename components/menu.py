@@ -22,7 +22,7 @@ class MenuAut:
         self.painel.pack()
 
         try:
-            with open("../dados.json") as r:
+            with open("../src/dados/key.json") as r:
                 self.arquivo = json.load(r)
                 self.validado = menu_service.validarKey(self.arquivo["senha"]);
         except:
@@ -40,13 +40,14 @@ class MenuAut:
             self.botaoAut["text"] = "Chave validada!"
             self.botaoAut["bg"] = "green"
             validado = {'senha': self.key}
-            with open("../dados.json", "w", encoding='utf-8') as arquivo:
+            with open("../src/dados/key.json", "w", encoding='utf-8') as arquivo:
                 json.dump(validado, arquivo)
                 arquivo.close()
             self.container2.destroy()
             self.container3.destroy()
             self.renderOpcoes()
         else:
+            self.keyEnter.delete(0, END)
             self.botaoAut["text"] = "Erro de autenticação"
             self.botaoAut["bg"] = "yellow"
 
@@ -65,39 +66,40 @@ class MenuAut:
         self.botaoAut["command"] = self.actionAutenticar
         self.botaoAut.pack(side=TOP)
     
-    def renderInvocador(self, container, invoc):
-        self.labelInvocador = Frame(container)
-        self.labelInvocador.pack(side=LEFT)
 
-        
+    def renderOpcoes(self):
+        self.container2 = Frame(self.root, highlightbackground="red", highlightcolor="red", highlightthickness=1, pady = 20)
+#, pady=50, padx=20
+        self.container2.pack(side = LEFT)
 
-        invoc = menu_service.summonerByName("0 Fígurante", self.key)
+        self.invocador = api_service.checarInvSalvo()
+        if(self.invocador):
+            self.renderInvocador()
+        else:
+            self.renderSalvarInvocador()
 
-        icon = api_service.iconeInv(invoc)
 
+
+            
+    def renderInvocador(self):
+        icon = api_service.iconeInv(self.invocador)
         width, height = icon.size
         icon = icon.resize((width // 4, height // 4), Image.ANTIALIAS)
         self.imgIcon  = ImageTk.PhotoImage(icon)
-    
 
+        nomeInv = getattr("name", self.invocador)
+        self.labelInvocador = Label(self.container2, image=self.imgIcon, text = nomeInv)
         self.labelInvocador.pack(side=LEFT)
-
-
-        self.labelIcon = Label(self.labelInvocador, image=self.imgIcon)
-        self.labelIcon.image = self.imgIcon
-        self.labelIcon.pack(side=LEFT)
         
-        self.labelNomeInv = Label(self.labelInvocador, text="0 Fígurante", font="termite 15 bold")
-        self.labelNomeInv.pack(side=RIGHT)
 
+        #self.labelIcon = Label(self.labelInvocador, image=self.imgIcon)
+        #self.labelIcon.image = self.imgIcon
+        #self.labelIcon.pack(side=LEFT)
+        
+        #self.labelNomeInv = Label(self.labelInvocador, text="0 Fígurante", font="termite 15 bold")
+        #self.labelNomeInv.pack(side=RIGHT)
 
-    def renderOpcoes(self):
-        self.container2 = Frame(self.root, highlightbackground="red", highlightcolor="red", highlightthickness=1, bd=0,
-                                pady=20, padx=20)
-        self.container2.pack(expand=False)
-
-        self.labelInvocador = Frame(self.container2)
-        self.labelInvocador.pack(side=LEFT)
+       
 
         
 
@@ -122,6 +124,43 @@ class MenuAut:
         
         #self.labelNomeInv = Label(self.labelInvocador, text="0 Fígurante", font="termite 15 bold")
         #self.labelNomeInv.pack(side=RIGHT)
+
+    def renderSalvarInvocador(self):
+        
+        self.frameInv = Frame(self.container2)
+        #self.frameInv.pack()
+        self.labelTxt = Label(self.container2, text = "Digite seu nome invocador: ")
+        self.labelTxt["font"] = ("Nerdfont", 10,"bold")
+        #self.labelTxt.grid(column = 0, row = 1)
+        self.labelTxt.pack(side = LEFT)
+
+        self.inputNome = Entry(self.container2)
+        self.inputNome.pack()
+        #self.inputNome.grid(column = 2, row = 1)
+
+        #self.frameBot = Frame(self.container2)
+        #self.frameBot.grid(row = 2)
+        #self.frameBot.pack()
+
+        self.botaoSalvar = Button(self.container2, text="Buscar", anchor = CENTER)
+        self.botaoSalvar["command"] = self.actionSalvarInvoc
+        self.botaoSalvar.pack(anchor = CENTER)
+        #self.botaoSalvar.grid(row = 2, column = 1)
+
+        
+    
+    def actionSalvarInvoc(self):
+        nome = self.inputNome.get()
+        invoc = menu_service.summonerByName(nome, self.key) 
+        if(invoc == "ERRO"):
+            self.inputNome.delete(0,END)
+            self.botaoSalvar["bg"] = "red"
+            self.botaoSalvar["text"] = "Invocador nao encontrado"
+        else:
+            self.botaoSalvar["bg"] = "green"
+            self.botaoSalvar["text"] = "Salvo!"
+            api_service.salvarInv(invoc)
+            
 
 
 
