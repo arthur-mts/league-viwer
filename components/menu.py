@@ -74,8 +74,10 @@ class MenuAut:
 
         self.invocador = api_service.checarInvSalvo()
         print(self.invocador)
+
         if(self.invocador):
             self.renderInvocador()
+            #self.renderSalvarInvocador()
         else:
             self.renderSalvarInvocador()
 
@@ -83,25 +85,29 @@ class MenuAut:
 
             
     def renderInvocador(self):
-        self.container2.destroy()
-        self.container2 = Frame(self.root, highlightbackground="red", highlightcolor="red", highlightthickness=1, pady = 20)
 
+        if hasattr(self, "frameInvSalvo"):
+            self.frameInvSalvo.destroy()
+        
 
+        self.frameInvSalvo = Frame(self.root)
+        self.frameInvSalvo.pack(side = LEFT)
+    
         icon = api_service.iconeInv(self.invocador)
         width, height = icon.size
         icon = icon.resize((width // 4, height // 4), Image.ANTIALIAS)
         self.imgIcon  = ImageTk.PhotoImage(icon)
 
+        self.canvasImg = Canvas(self.frameInvSalvo, width = width//4, height = height//4)
+        self.canvasImg.grid(column = 0, row = 0)
+        self.canvasImg.create_image((0,0),image = self.imgIcon, anchor = NW)
+        self.canvasImg.image = self.imgIcon
 
         nomeInv = getattr(self.invocador, "name")
-        self.labelInvocador = Label(self.container2, image=self.imgIcon, text = nomeInv, font="termite 15 bold")
-        self.labelInvocador.image = self.imgIcon
-        self.labelInvocador.pack(side=RIGHT)
-        
+        self.labelInvocador = Label(self.frameInvSalvo, image=self.imgIcon)
+        self.labelNome = Label(self.frameInvSalvo, text = nomeInv, font="termite 15 bold")
+        self.labelNome.grid(column = 1, row = 0)
 
-        
-
-       
 
         
 
@@ -112,24 +118,24 @@ class MenuAut:
 
     def renderSalvarInvocador(self):
         
-        self.frameInv = Frame(self.container2)
-        #self.frameInv.pack()
-        self.labelTxt = Label(self.container2, text = "Digite seu nome invocador: ")
+        self.frameInv = Frame(self.root)
+        self.frameInv.grid(column = 0, row = 0)
+        self.labelTxt = Label(self.frameInv, text = "Digite seu nome invocador: ")
         self.labelTxt["font"] = ("Nerdfont", 10,"bold")
-        #self.labelTxt.grid(column = 0, row = 1)
-        self.labelTxt.pack(side = LEFT)
+        self.labelTxt.grid(row = 0, sticky = W)
+        #self.labelTxt.pack(side = LEFT)
 
-        self.inputNome = Entry(self.container2)
-        self.inputNome.pack()
-        #self.inputNome.grid(column = 2, row = 1)
+        self.inputNome = Entry(self.frameInv)
+        #self.inputNome.pack()
+        self.inputNome.grid(column = 1, row = 0)
 
         #self.frameBot = Frame(self.container2)
         #self.frameBot.grid(row = 2)
         #self.frameBot.pack()
 
-        self.botaoSalvar = Button(self.container2, text="Buscar", anchor = CENTER)
+        self.botaoSalvar = Button(self.frameInv, text="Buscar", anchor = CENTER)
         self.botaoSalvar["command"] = self.actionSalvarInvoc
-        self.botaoSalvar.pack(anchor = CENTER)
+        self.botaoSalvar.grid(row = 1)
         #self.botaoSalvar.grid(row = 2, column = 1)
 
         
@@ -142,9 +148,11 @@ class MenuAut:
             self.botaoSalvar["bg"] = "red"
             self.botaoSalvar["text"] = "Invocador nao encontrado"
         else:
+            self.invocador = invoc
             self.botaoSalvar["bg"] = "green"
             self.botaoSalvar["text"] = "Salvo!"
             api_service.salvarInv(invoc)
+            self.frameInv.destroy()
             self.renderInvocador()
             
 
