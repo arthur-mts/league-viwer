@@ -7,8 +7,10 @@ from PIL import ImageTk, Image
 class MenuAut:
     def __init__(self, root):
         self.root = root
-        self.container = Frame(root, highlightbackground="red", highlightcolor="red", highlightthickness=1, bd=0)
-        #self.container.pack()
+        self.container = Frame(root, highlightbackground="red", highlightcolor="red", highlightthickness=1, width =500)
+                #self.container.pack()
+        self.container.grid_columnconfigure(0, weight = 1)
+        self.container.grid_rowconfigure(0, weight = 1)
         self.container.grid(row = 0, column = 0, ipady=40)
 
         # Redimensionando logo
@@ -20,7 +22,9 @@ class MenuAut:
         self.painel = Label(self.container, image=self.logoImg, highlightbackground="red", highlightcolor="red",
                             highlightthickness=1, bd=0)
         self.painel.image = self.logoImg
-        self.painel.pack(anchor = CENTER)
+        self.painel.grid_columnconfigure(0, weight = 1)
+        self.painel.grid_rowconfigure(0, weight = 1)
+        self.painel.pack(anchor=W, fill=Y, expand=False, side=LEFT)
 
         try:
             with open("../src/dados/key.json") as r:
@@ -129,7 +133,7 @@ class MenuAut:
         
         self.frameInv = Frame(self.root)
         #self.frameInv.pack(side = BOTTOM, ensure = LEFT)
-        self.frameInv.grid(row = 2, ipady = 20) 
+        self.frameInv.grid(row = 2, ipadx = 20) 
 
 
         self.labelTxt = Label(self.frameInv, text = "Digite seu nome invocador: ")
