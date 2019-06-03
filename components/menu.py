@@ -8,7 +8,8 @@ class MenuAut:
     def __init__(self, root):
         self.root = root
         self.container = Frame(root, highlightbackground="red", highlightcolor="red", highlightthickness=1, bd=0)
-        self.container.pack()
+        #self.container.pack()
+        self.container.grid(row = 0, column = 0, ipady=40)
 
         # Redimensionando logo
         img = Image.open('../src/img/lol_logo.png')
@@ -19,7 +20,7 @@ class MenuAut:
         self.painel = Label(self.container, image=self.logoImg, highlightbackground="red", highlightcolor="red",
                             highlightthickness=1, bd=0)
         self.painel.image = self.logoImg
-        self.painel.pack()
+        self.painel.pack(anchor = CENTER)
 
         try:
             with open("../src/dados/key.json") as r:
@@ -54,30 +55,35 @@ class MenuAut:
     def renderAutenticar(self):
         self.container2 = Frame(self.root)
         self.container2["pady"] = 10
-        self.container2.pack()
+        #self.container2.pack(side = LEFT)
+        self.container2.grid(column = 2, row = 0, columnspan = 2)
         self.textoAut = Label(self.container2, text="Digite sua chave de acesso: ")
         self.textoAut["font"] = ("20")
-        self.textoAut.pack(side=LEFT)
+        self.textoAut.grid(sticky = E)
         self.keyEnter = Entry(self.container2)
-        self.keyEnter.pack(side=LEFT)
-        self.container3 = Frame(self.root)
-        self.container3.pack()
-        self.botaoAut = Button(self.container3, text="Autenticar")
+        self.keyEnter.grid(column = 1, row = 0)
+        #self.keyEnter.pack(side=LEFT)
+        #self.container3 = Frame(self.root)
+        #self.container3.pack()
+        #self.container3.grid()
+        self.botaoAut = Button(self.container2, text="Autenticar")
         self.botaoAut["command"] = self.actionAutenticar
-        self.botaoAut.pack(side=TOP)
+        self.botaoAut.grid(rowspan = 2)
+        #self.botaoAut.pack(side=TOP)
     
 
     def renderOpcoes(self):
-        self.container2 = Frame(self.root, highlightbackground="red", highlightcolor="red", highlightthickness=1, pady = 20)
+        #self.container2 = Frame(self.root, highlightbackground="red", highlightcolor="red", highlightthickness=1, pady = 20)
 #, pady=50, padx=20
-        self.container2.pack(side = LEFT)
+        #self.container2.pack(side = LEFT)
+        #self.container2.grid(co)
 
         self.invocador = api_service.checarInvSalvo()
         print(self.invocador)
 
         if(self.invocador):
+            self.renderSalvarInvocador()
             self.renderInvocador()
-            #self.renderSalvarInvocador()
         else:
             self.renderSalvarInvocador()
 
@@ -91,20 +97,23 @@ class MenuAut:
         
 
         self.frameInvSalvo = Frame(self.root)
-        self.frameInvSalvo.pack(side = LEFT)
-    
+        #self.frameInvSalvo.pack(side = LEFT)
+        self.frameInvSalvo.grid(row = 3, column = 0)
+
         icon = api_service.iconeInv(self.invocador)
         width, height = icon.size
-        icon = icon.resize((width // 4, height // 4), Image.ANTIALIAS)
+        icon = icon.resize((75, 75), Image.ANTIALIAS)
         self.imgIcon  = ImageTk.PhotoImage(icon)
 
-        self.canvasImg = Canvas(self.frameInvSalvo, width = width//4, height = height//4)
-        self.canvasImg.grid(column = 0, row = 0)
-        self.canvasImg.create_image((0,0),image = self.imgIcon, anchor = NW)
-        self.canvasImg.image = self.imgIcon
-
+        #self.canvasImg = Canvas(self.frameInvSalvo, width = 75, height = 75)
+        #self.canvasImg.grid(column = 0, row = 0)
+        #self.canvasImg.create_image((0,0),image = self.imgIcon, anchor = NW)
+        #self.canvasImg.image = self.imgIcon
+        self.labelImg = Label(self.frameInvSalvo, image = self.imgIcon)
+        self.labelImg.grid(row = 0, column = 0, sticky = E)
+        
         nomeInv = getattr(self.invocador, "name")
-        self.labelInvocador = Label(self.frameInvSalvo, image=self.imgIcon)
+        self.labelInvocador = Label(self.frameInvSalvo)
         self.labelNome = Label(self.frameInvSalvo, text = nomeInv, font="termite 15 bold")
         self.labelNome.grid(column = 1, row = 0)
 
@@ -119,23 +128,31 @@ class MenuAut:
     def renderSalvarInvocador(self):
         
         self.frameInv = Frame(self.root)
-        self.frameInv.grid(column = 0, row = 0)
+        #self.frameInv.pack(side = BOTTOM, ensure = LEFT)
+        self.frameInv.grid(row = 2, ipady = 20) 
+
+
         self.labelTxt = Label(self.frameInv, text = "Digite seu nome invocador: ")
         self.labelTxt["font"] = ("Nerdfont", 10,"bold")
-        self.labelTxt.grid(row = 0, sticky = W)
+        self.labelTxt.grid(column = 0,row = 0, sticky = E)
         #self.labelTxt.pack(side = LEFT)
 
         self.inputNome = Entry(self.frameInv)
-        #self.inputNome.pack()
-        self.inputNome.grid(column = 1, row = 0)
-
-        #self.frameBot = Frame(self.container2)
-        #self.frameBot.grid(row = 2)
-        #self.frameBot.pack()
+        self.inputNome.grid(row = 0, column = 1)
 
         self.botaoSalvar = Button(self.frameInv, text="Buscar", anchor = CENTER)
         self.botaoSalvar["command"] = self.actionSalvarInvoc
-        self.botaoSalvar.grid(row = 1)
+        self.botaoSalvar.grid(row = 1, column = 0)
+
+
+
+                #self.inputNome.pack()
+
+        #self.frameBot = Frame(self.frameInv)
+        #self.frameBot.grid(row = 1, columnspan = 2)
+        #self.frameBot.pack()
+
+                #self.botaoSalvar.grid(rowspan = 2)
         #self.botaoSalvar.grid(row = 2, column = 1)
 
         
@@ -152,7 +169,6 @@ class MenuAut:
             self.botaoSalvar["bg"] = "green"
             self.botaoSalvar["text"] = "Salvo!"
             api_service.salvarInv(invoc)
-            self.frameInv.destroy()
             self.renderInvocador()
             
 
