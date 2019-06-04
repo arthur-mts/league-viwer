@@ -4,7 +4,8 @@ from services import menu_service
 URL = "https://br1.api.riotgames.com/lol/"
 image = "http://ddragon.leagueoflegends.com/cdn/img/champion/splash/"
 ending = "_0.jpg"
-champions = menu_service.generateJsonChamps()
+images = []
+champions = requests.get("http://ddragon.leagueoflegends.com/cdn/9.11.1/data/pt_BR/champion.json").json()
 
 
 def most_played_champions(summoner, key):
