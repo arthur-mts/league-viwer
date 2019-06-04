@@ -5,6 +5,9 @@ from PIL import ImageTk, Image
 global bg
 bg = "#182422"
 
+global fg
+fg = "#F3E171"
+
 
 class MenuAut:
     def __init__(self, root):
@@ -82,17 +85,21 @@ class MenuAut:
         #self.container2.grid(co)
 
         self.invocador = api_service.checarInvSalvo()
-        print(self.invocador)
 
+        self.status = api_service.statusServidor(self.key)
+        self.labelStatus = Label(self.root, bg =bg , fg = fg, text = self.status[0]+"\n"+self.status[1])
+        self.labelStatus["font"] = ("arial", 15,"italic","underline")
+        self.labelStatus.grid(row = 2, column = 2)
+        self.labelStatus.place(x = 400, y = 650)
 
         if(self.invocador):
             self.renderInvocador()
             self.renderSalvarInvocador()
+            self.renderMenuLateral()
         else:
             self.renderSalvarInvocador()
 
-
-
+    
             
     def renderInvocador(self):
 
@@ -137,16 +144,16 @@ class MenuAut:
         self.frameInv = Frame(self.root, bg = bg)
         #self.frameInv.pack(side = BOTTOM, ensure = LEFT)
         self.frameInv.grid(row = 1, pady = 20) 
-        self.frameInv.place(x = 10, y = 200)
+        self.frameInv.place(x = 10, y = 250)
 
         #self.labelTxt = Label(self.frameInv, text = "Digite seu nome invocador: ")
         #self.labelTxt["font"] = ("Nerdfont", 10,"bold")
         #self.labelTxt.grid(column = 0,row = 0, sticky = E)
         #self.labelTxt.pack(side = LEFT)
 
-        self.inputNome = Entry(self.frameInv, width=25, font="bold", fg='#96752F')
+        self.inputNome = Entry(self.frameInv, width=25, font="bold", fg=fg)
         self.inputNome.insert(0, "Digite seu nome invocador: ")
-        self.inputNome.grid(row = 0, column = 0)
+        self.inputNome.grid(row = 0, column = 0, pady = 15)
 
         self.botaoSalvar = Button(self.frameInv, text="Buscar", anchor = CENTER)
         self.botaoSalvar["command"] = self.actionSalvarInvoc
@@ -178,10 +185,23 @@ class MenuAut:
             self.inputNome["background"] = "#4EC375"
             api_service.salvarInv(invoc)
             self.renderInvocador()
-            
-
     
+    def renderMenuLateral(self):
+        self.boxBotoes = Frame(self.root, bg = bg)        
+        self.boxBotoes.grid(row = 1, column = 2)
+        self.boxBotoes.place(y = 200, x = 630)
 
+        self.botao1 = Button(self.boxBotoes, text = "Campeões mais jogados", bg = bg, fg = fg, height=1, width=20, font = "bold")
+        self.botao1.grid(column = 0, row = 0, pady = 15)
+        
+        self.botao2 = Button(self.boxBotoes, text = "Estatisticas", bg = bg, fg = fg, height=1, width=20, font = "bold")
+        self.botao2.grid(column = 0, row = 1, pady = 15)
+
+        self.botao3 = Button(self.boxBotoes, text = "Última partida", bg = bg, fg = fg, height=1, width=20, font = "bold")
+        self.botao3.grid(column = 0, row = 2, pady = 15)
+
+        self.botao4 = Button(self.boxBotoes, text = "Detalhes do invocador", bg = bg, fg = fg, height=1, width=20, font = "bold")
+        self.botao4.grid(column = 0, row = 3, pady = 15)
 
 
 root = Tk()
