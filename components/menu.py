@@ -2,25 +2,24 @@ import json
 from tkinter import *
 from services import menu_service, api_service
 from PIL import ImageTk, Image
+global bg
+bg = "#182422"
 
 
 class MenuAut:
     def __init__(self, root):
         self.root = root
-        self.container = Frame(root, highlightbackground="red", highlightcolor="red", highlightthickness=1, width =500)
+        self.container = Frame(root)
                 #self.container.pack()
-        self.container.grid_columnconfigure(0, weight = 1)
-        self.container.grid_rowconfigure(0, weight = 1)
-        self.container.grid(row = 0, column = 0, ipady=40)
-
+        self.container.grid(row = 0, column = 2, columnspan = 2)
+        self.container.place(x = 340, y = 0)
         # Redimensionando logo
         img = Image.open('../src/img/lol_logo.png')
         width, height = img.size
         img = img.resize((width // 2, height // 2), Image.ANTIALIAS)
         self.logoImg = ImageTk.PhotoImage(img)
 
-        self.painel = Label(self.container, image=self.logoImg, highlightbackground="red", highlightcolor="red",
-                            highlightthickness=1, bd=0)
+        self.painel = Label(self.container, image=self.logoImg, bg = bg)
         self.painel.image = self.logoImg
         self.painel.grid_columnconfigure(0, weight = 1)
         self.painel.grid_rowconfigure(0, weight = 1)
@@ -85,9 +84,10 @@ class MenuAut:
         self.invocador = api_service.checarInvSalvo()
         print(self.invocador)
 
+
         if(self.invocador):
-            self.renderSalvarInvocador()
             self.renderInvocador()
+            self.renderSalvarInvocador()
         else:
             self.renderSalvarInvocador()
 
@@ -100,9 +100,12 @@ class MenuAut:
             self.frameInvSalvo.destroy()
         
 
-        self.frameInvSalvo = Frame(self.root)
+        self.frameInvSalvo = Frame(self.root, width=100, height=100, bg = bg)
         #self.frameInvSalvo.pack(side = LEFT)
-        self.frameInvSalvo.grid(row = 3, column = 0)
+
+        self.frameInvSalvo.grid(row = 0, column = 0, pady=20)
+        #print(self.root.grid_location(50,0 ))        
+        self.frameInvSalvo.place(x = 20, y = 20)   
 
         icon = api_service.iconeInv(self.invocador)
         width, height = icon.size
@@ -118,7 +121,7 @@ class MenuAut:
         
         nomeInv = getattr(self.invocador, "name")
         self.labelInvocador = Label(self.frameInvSalvo)
-        self.labelNome = Label(self.frameInvSalvo, text = nomeInv, font="termite 15 bold")
+        self.labelNome = Label(self.frameInvSalvo, text = nomeInv, font="termite 15 bold", bg = bg)
         self.labelNome.grid(column = 1, row = 0)
 
 
@@ -131,18 +134,19 @@ class MenuAut:
 
     def renderSalvarInvocador(self):
         
-        self.frameInv = Frame(self.root)
+        self.frameInv = Frame(self.root, bg = bg)
         #self.frameInv.pack(side = BOTTOM, ensure = LEFT)
-        self.frameInv.grid(row = 2, ipadx = 20) 
+        self.frameInv.grid(row = 1, pady = 20) 
+        self.frameInv.place(x = 10, y = 200)
 
-
-        self.labelTxt = Label(self.frameInv, text = "Digite seu nome invocador: ")
-        self.labelTxt["font"] = ("Nerdfont", 10,"bold")
-        self.labelTxt.grid(column = 0,row = 0, sticky = E)
+        #self.labelTxt = Label(self.frameInv, text = "Digite seu nome invocador: ")
+        #self.labelTxt["font"] = ("Nerdfont", 10,"bold")
+        #self.labelTxt.grid(column = 0,row = 0, sticky = E)
         #self.labelTxt.pack(side = LEFT)
 
-        self.inputNome = Entry(self.frameInv)
-        self.inputNome.grid(row = 0, column = 1)
+        self.inputNome = Entry(self.frameInv, width=25, font="bold", fg='#96752F')
+        self.inputNome.insert(0, "Digite seu nome invocador: ")
+        self.inputNome.grid(row = 0, column = 0)
 
         self.botaoSalvar = Button(self.frameInv, text="Buscar", anchor = CENTER)
         self.botaoSalvar["command"] = self.actionSalvarInvoc
@@ -170,21 +174,21 @@ class MenuAut:
             self.botaoSalvar["text"] = "Invocador nao encontrado"
         else:
             self.invocador = invoc
-            self.botaoSalvar["bg"] = "green"
             self.botaoSalvar["text"] = "Salvo!"
+            self.inputNome["background"] = "#4EC375"
             api_service.salvarInv(invoc)
             self.renderInvocador()
             
 
-
-
+    
 
 
 
 root = Tk()
 root.title("League Viwer")
 
-root.geometry("700x500")
+root.geometry("900x700")
+root["background"] = "#182422"
 root.update()
 MenuAut(root)
 root.mainloop()
