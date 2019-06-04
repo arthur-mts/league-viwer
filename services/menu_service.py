@@ -14,7 +14,7 @@ def validarKey(key):
 def generateJsonChamps():
     global jsonchamps
     if(jsonchamps==0):
-        jsonchamps = requests.get("http://ddragon.leagueoflegends.com/cdn/9.10.1/data/pt_BR/champion.json").json()
+        jsonchamps = requests.get("http://ddragon.leagueoflegends.com/cdn/9.11.1/data/pt_BR/champion.json").json()
 
 def summonerByName(name, key):
     end = "summoner/v4/summoners/by-name/"+name+"?api_key="+key
