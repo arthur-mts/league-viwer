@@ -12,7 +12,7 @@ fg = "#F3E171"
 class MenuAut:
     def __init__(self, root):
         self.root = root
-        self.container = Frame(root)
+        self.container = Frame(root, bg = bg)
                 #self.container.pack()
         self.container.grid(row = 0, column = 2, columnspan = 2)
         self.container.place(x = 340, y = 0)
@@ -51,7 +51,6 @@ class MenuAut:
                 json.dump(validado, arquivo)
                 arquivo.close()
             self.container2.destroy()
-            self.container3.destroy()
             self.renderOpcoes()
         else:
             self.keyEnter.delete(0, END)
@@ -59,22 +58,23 @@ class MenuAut:
             self.botaoAut["bg"] = "yellow"
 
     def renderAutenticar(self):
-        self.container2 = Frame(self.root)
+        self.container2 = Frame(self.root, bg = bg)
         self.container2["pady"] = 10
         #self.container2.pack(side = LEFT)
         self.container2.grid(column = 2, row = 0, columnspan = 2)
-        self.textoAut = Label(self.container2, text="Digite sua chave de acesso: ")
+        self.container2.place(x= 250, y = 200)
+        self.textoAut = Label(self.container2, text="Digite sua chave de acesso: ", bg = bg, width = 40)
         self.textoAut["font"] = ("20")
-        self.textoAut.grid(sticky = E)
-        self.keyEnter = Entry(self.container2)
-        self.keyEnter.grid(column = 1, row = 0)
+        self.textoAut.grid(column = 0, row = 0, sticky = E)
+        self.keyEnter = Entry(self.container2, fg = fg, width = 40)
+        self.keyEnter.grid(column = 0, row = 1, pady = 20)
         #self.keyEnter.pack(side=LEFT)
         #self.container3 = Frame(self.root)
         #self.container3.pack()
         #self.container3.grid()
         self.botaoAut = Button(self.container2, text="Autenticar")
         self.botaoAut["command"] = self.actionAutenticar
-        self.botaoAut.grid(rowspan = 2)
+        self.botaoAut.grid(row = 2)
         #self.botaoAut.pack(side=TOP)
     
 
@@ -110,9 +110,9 @@ class MenuAut:
         self.frameInvSalvo = Frame(self.root, width=100, height=100, bg = bg)
         #self.frameInvSalvo.pack(side = LEFT)
 
-        self.frameInvSalvo.grid(row = 0, column = 0, pady=20)
+        self.frameInvSalvo.grid(row = 1, column = 0, pady=20)
         #print(self.root.grid_location(50,0 ))        
-        self.frameInvSalvo.place(x = 20, y = 20)   
+        self.frameInvSalvo.place(x = 20, y = 380)   
 
         icon = api_service.iconeInv(self.invocador)
         width, height = icon.size

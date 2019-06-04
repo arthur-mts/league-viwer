@@ -1,5 +1,6 @@
 import urllib.request
 import json
+import requests
 from services import menu_service
 from classes import userwatcher
 from tkinter import *
@@ -33,4 +34,11 @@ def salvarInv(inv):
     with open("../src/dados/inv.json", "w", encoding="utf-8") as r:
         json.dump(jinv,r)
         r.close()
-        
+
+def statusServidor(key):
+    status = requests.get("https://br1.api.riotgames.com/lol/status/v3/shard-data?api_key="+key).json()
+#    print(status)
+    res = ["Game: "+ status["services"][0]["status"], "Client: "+ status["services"][3]["status"]
+    ]
+    print(res)
+    return res
