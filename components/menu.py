@@ -184,7 +184,7 @@ class MenuAut:
             self.botaoSalvar["text"] = "Salvo!"
             self.inputNome["background"] = "#4EC375"
             api_service.salvarInv(invoc)
-            self.renderInvocador()
+            self.renderOpcoes()
     
     def renderMenuLateral(self):
         self.boxBotoes = Frame(self.root, bg = bg)        
