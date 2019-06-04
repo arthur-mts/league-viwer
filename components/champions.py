@@ -3,24 +3,18 @@ from tkinter import *
 
 class Screen:
     def __init__(self, master=None):
-        # First container
+        # First container (Title)
         self.first = Frame(master)
         self.first.pack()
-        # Second container
+        # Second container (First champion)
         self.second = Frame(master)
         self.second.pack()
-        # Third container
+        # Third container (Second champion)
         self.third = Frame(master)
         self.third.pack()
-        # Fourth container
+        # Fourth container (Third champion)
         self.fourth = Frame(master)
         self.fourth.pack()
-        # Fifth container
-        self.fifth = Frame(master)
-        self.fifth.pack()
-        # Sixth container
-        self.sixth = Frame(master)
-        self.sixth.pack()
         # Title
         self.title = Label(self.first)
         self.title["text"] = "Campeões mais jogados"
