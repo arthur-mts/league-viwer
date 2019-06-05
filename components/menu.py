@@ -1,7 +1,10 @@
 import json
 from tkinter import *
+#Não consigo abrir o arquivo da mesma pasta no linux. talvez tenha q tirar na versao final
+from components import viewInvocador
 from services import menu_service, api_service
 from PIL import ImageTk, Image
+
 global bg
 bg = "#182422"
 
@@ -10,9 +13,16 @@ fg = "#F3E171"
 
 
 class MenuAut:
-    def __init__(self, root):
-        self.root = root
-        self.container = Frame(root, bg = bg)
+    def __init__(self):
+        self.root = Tk()
+        self.root.title("League Viwer")
+
+        self.root.geometry("900x700")
+        self.root["background"] = bg
+        self.root.update()
+
+
+        self.container = Frame(self.root, bg = bg)
                 #self.container.pack()
         self.container.grid(row = 0, column = 2, columnspan = 2)
         self.container.place(x = 340, y = 0)
@@ -200,15 +210,20 @@ class MenuAut:
         self.botao3 = Button(self.boxBotoes, text = "Última partida", bg = bg, fg = fg, height=1, width=20, font = "bold")
         self.botao3.grid(column = 0, row = 2, pady = 15)
 
-        self.botao4 = Button(self.boxBotoes, text = "Detalhes do invocador", bg = bg, fg = fg, height=1, width=20, font = "bold")
+        self.botao4 = Button(self.boxBotoes, text = "Ver rank", bg = bg, fg = fg, height=1, width=20, font = "bold")
+        self.botao4["command"]=self.renderQueue
         self.botao4.grid(column = 0, row = 3, pady = 15)
 
 
-root = Tk()
-root.title("League Viwer")
 
-root.geometry("900x700")
-root["background"] = "#182422"
-root.update()
-MenuAut(root)
-root.mainloop()
+    def renderQueue(self):
+        idInv = getattr(self.invocador, "id")
+        jsonqueue = api_service.getQueue(idInv, self.key)
+        print(jsonqueue)
+        self.root.destroy()
+        viewInvocador.InfoInvocador(jsonqueue)
+        
+
+menu = MenuAut()
+getattr(menu, "root").mainloop()
+

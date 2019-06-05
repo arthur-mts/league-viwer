@@ -24,7 +24,6 @@ def checarInvSalvo():
     if "invocador" in arquivo.keys():
         invoc = json.loads(arquivo["invocador"])
         cinv = userwatcher.Summoner(invoc)
-        print(cinv)
         return cinv
     else:
         return False
@@ -40,5 +39,14 @@ def statusServidor(key):
 #    print(status)
     res = ["Game: "+ status["services"][0]["status"], "Client: "+ status["services"][3]["status"]
     ]
-    print(res)
     return res
+
+
+
+def getQueue(idInvocador, key):
+    url = "https://br1.api.riotgames.com/lol/league/v4/entries/by-summoner/"+idInvocador+"?api_key="+key
+    print(url)
+    res = requests.get(url).json()
+    return res
+
+
