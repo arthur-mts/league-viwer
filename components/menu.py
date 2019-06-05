@@ -14,9 +14,10 @@ fg = "#F3E171"
 
 class MenuAut:
     def __init__(self):
+        #Renderizar imagem de titulo
         self.root = Tk()
         self.root.title("League Viwer")
-
+        self.root.resizable(False, False)
         self.root.geometry("900x700")
         self.root["background"] = bg
         self.root.update()
