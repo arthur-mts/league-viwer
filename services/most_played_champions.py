@@ -1,5 +1,4 @@
 import requests
-from services import menu_service
 
 URL = "https://br1.api.riotgames.com/lol/"
 image = "http://ddragon.leagueoflegends.com/cdn/img/champion/splash/"
@@ -16,9 +15,11 @@ def most_played_champions(summoner, key):
         for i in range(3):
             if champions["data"][key]["key"] == str(result[i]["championId"]):
                 dictionary[i]["Name"] = champions["data"][key]["name"]
+                dictionary[i]["Title"] = champions["data"][key]["title"]
                 dictionary[i]["Mastery"] = result[i]["championLevel"]
                 dictionary[i]["Score"] = result[i]["championPoints"]
                 dictionary[i]["Chest"] = result[i]["chestGranted"]
+                dictionary[i]["Tags"] = champions["data"][key]["tags"]
                 dictionary[i]["Image"] = get_image(champions["data"][key]["id"])
     return dictionary
 
