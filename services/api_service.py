@@ -34,6 +34,7 @@ def salvarInv(inv):
         json.dump(jinv,r)
         r.close()
 
+
 def statusServidor(key):
     status = requests.get("https://br1.api.riotgames.com/lol/status/v3/shard-data?api_key="+key).json()
 #    print(status)
@@ -49,4 +50,7 @@ def getQueue(idInvocador, key):
     res = requests.get(url).json()
     return res
 
-
+def getFullLeague(leagueId, key):
+    url = "https://br1.api.riotgames.com/lol/league/v4/leagues/"+leagueId+"?api_key="+key
+    res = requests.get(url).json()
+    return res

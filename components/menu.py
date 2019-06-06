@@ -218,11 +218,8 @@ class MenuAut:
 
 
     def renderQueue(self):
-        idInv = getattr(self.invocador, "id")
-        jsonqueue = api_service.getQueue(idInv, self.key)
-        print(jsonqueue)
         self.root.destroy()
-        viewInvocador.InfoInvocador(jsonqueue)
+        viewInvocador.InfoInvocador(self.invocador, self.key)
         
 
 menu = MenuAut()
