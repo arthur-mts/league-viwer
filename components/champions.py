@@ -17,11 +17,13 @@ colours = {"Fighter": "#933A16",
            "Support": "#44ACB5"}
 
 
-class Screen:
-    def __init__(self, name, key, master=None):
+search = menu_service.summonerByName("Anyone", "RGAPI-adb52a9b-f125-4790-94bd-e25938521155")
+dictionary = most_played_champions.most_played_champions(search.id, "RGAPI-adb52a9b-f125-4790-94bd-e25938521155")
 
-        search = menu_service.summonerByName(name, key)
-        dictionary = most_played_champions.most_played_champions(search.id, key)
+
+class Screen:
+
+    def __init__(self, master=None):
 
         # Title
         self.first = Frame(master)
@@ -38,21 +40,14 @@ class Screen:
         colour = {True: "#50C878",
                   False: "#CA3433"}
 
+        # Render images
+        for i in range(3):
+            self.render(i, 50, 100 if i == 0 else 300 if i == 1 else 500)
+
         # First champion
         self.second = Frame(master, bg=background)
         self.second.pack()
         self.second.place(x=400, y=120)
-
-        # First champion image
-        link = urlopen(dictionary[0]["Image"]).read()
-        data = Image.open(io.BytesIO(link))
-        width, height = data.size
-        data = data.resize((width // 4, height // 4), Image.ANTIALIAS)
-        image = ImageTk.PhotoImage(data)
-        image = image
-        show = Label(master, image=image, bg=background)
-        show.image = image
-        show.place(x=50, y=100)
 
         # First champion info
         Label(self.second, text="Nome:", fg=foreground, bg=background, font=default).grid(row=1)
@@ -73,17 +68,6 @@ class Screen:
         self.third.pack()
         self.third.place(x=400, y=320)
 
-        # Second champion image
-        link = urlopen(dictionary[1]["Image"]).read()
-        data = Image.open(io.BytesIO(link))
-        width, height = data.size
-        data = data.resize((width // 4, height // 4), Image.ANTIALIAS)
-        image = ImageTk.PhotoImage(data)
-        image = image
-        show = Label(master, image=image, bg=background)
-        show.image = image
-        show.place(x=50, y=300)
-
         # Second champion info
         Label(self.third, text="Nome:", fg=foreground, bg=background, font=default).grid(row=0)
         Label(self.third, text=dictionary[1]["Name"] + ", " + dictionary[1]["Title"],
@@ -102,17 +86,6 @@ class Screen:
         self.fourth.pack()
         self.fourth.place(x=400, y=520)
 
-        # Third champion image
-        link = urlopen(dictionary[2]["Image"]).read()
-        data = Image.open(io.BytesIO(link))
-        width, height = data.size
-        data = data.resize((width // 4, height // 4), Image.ANTIALIAS)
-        image = ImageTk.PhotoImage(data)
-        image = image
-        show = Label(master, image=image, bg=background)
-        show.image = image
-        show.place(x=50, y=500)
-
         # Third champion info
         Label(self.fourth, text="Nome:", fg=foreground, bg=background, font=default).grid(row=0)
         Label(self.fourth, text=dictionary[2]["Name"] + ", " + dictionary[2]["Title"],
@@ -127,6 +100,18 @@ class Screen:
         Label(self.fourth, text=answer[dictionary[2]["Chest"]], fg=colour[dictionary[2]["Chest"]], bg=background,
               font=default).grid(row=3, column=1)
 
+    # Render images
+    def render(self, number, x, y):
+        link = urlopen(dictionary[number]["Image"]).read()
+        data = Image.open(io.BytesIO(link))
+        width, height = data.size
+        data = data.resize((width // 4, height // 4), Image.ANTIALIAS)
+        image = ImageTk.PhotoImage(data)
+        image = image
+        show = Label(self.first, image=image, bg=background)
+        show.image = image
+        show.place(x=x, y=y)
+
 
 root = Tk()
 root.title("League Viwer")
@@ -134,5 +119,5 @@ root.resizable(False, False)
 root["background"] = "#182422"
 root.geometry("1100x700")
 root.update()
-# Screen(root, name, key)
+Screen(root)
 root.mainloop()
