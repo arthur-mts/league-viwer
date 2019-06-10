@@ -33,8 +33,6 @@ class InfoInvocador:
         self.logoImg = ImageTk.PhotoImage(img)
         self.painel = Label(self.container, image=self.logoImg, bg = bg)
         self.painel.image = self.logoImg
-        self.painel.grid_columnconfigure(0, weight = 1)
-        self.painel.grid_rowconfigure(0, weight = 1)
         self.painel.pack(anchor=W, fill=Y, side=TOP)
         
         if(len(self.queueList) == 0):

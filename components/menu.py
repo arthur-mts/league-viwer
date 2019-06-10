@@ -1,7 +1,7 @@
 import json
 from tkinter import *
 #Não consigo abrir o arquivo da mesma pasta no linux. talvez tenha q tirar na versao final
-from components import viewInvocador
+from components import viewInvocador, viewEstatistica
 from services import menu_service, api_service
 from PIL import ImageTk, Image
 
@@ -166,6 +166,7 @@ class MenuAut:
         self.botao1.grid(column = 0, row = 0, pady = 15)
         
         self.botao2 = Button(self.boxBotoes, text = "Estatisticas", bg = bg, fg = fg, height=1, width=20, font = "bold")
+        self.botao2["command"] = self.renderEstatisticas
         self.botao2.grid(column = 0, row = 1, pady = 15)
 
         self.botao3 = Button(self.boxBotoes, text = "Última partida", bg = bg, fg = fg, height=1, width=20, font = "bold")
@@ -180,6 +181,11 @@ class MenuAut:
     def renderQueue(self):
         self.root.destroy()
         viewInvocador.InfoInvocador(self.invocador, self.key)
+
+    def renderEstatisticas(self):
+        self.root.destroy()
+        viewEstatistica.EstatisticasInvo(self.invocador, self.key)
+        
         
 
 menu = MenuAut()
