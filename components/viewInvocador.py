@@ -23,15 +23,10 @@ class InfoInvocador:
         self.root["background"] = bg
         self.root.update()
 
-        print(self.invocador)
-        print(self.queueList)
-
-
-
         #renderizar logo
         self.container = Frame(self.root, bg = bg)
-        self.container.grid(row = 0, column = 2, columnspan = 2)
-        self.container.place(x = 340, y = 0)
+        self.container.pack(side = TOP)
+        #self.container.place(x = 340, y = 0)
         img = Image.open('../src/img/lol_logo.png')
         width, height = img.size
         img = img.resize((width // 2, height // 2), Image.ANTIALIAS)
@@ -40,24 +35,16 @@ class InfoInvocador:
         self.painel.image = self.logoImg
         self.painel.grid_columnconfigure(0, weight = 1)
         self.painel.grid_rowconfigure(0, weight = 1)
-        self.painel.pack(anchor=W, fill=Y, expand=False, side=LEFT)
+        self.painel.pack(anchor=W, fill=Y, side=TOP)
         
         if(len(self.queueList) == 0):
             self.labelErro = Label(self.root, text ="Sem dados suficientes!\n Jogue partidas ranqueadas e volte mais tarde!", fg = fg, bg = bg, font = ("Verdana", 20, "bold"))
 
             self.labelErro.grid(column = 2, row = 1, columnspan = 2)
-            self.labelErro.place(x = 82, y = 200)
+            self.labelElo.pack(self.root, side = TOP)
         else:
-            ex = 20
-            ey = 130
-            for queue in self.queueList:
-                if ex < 600:
-                    self.renderQueue(queue, ex, ey)
-                    ex += 505
-                else:
-                    self.renderQueue(queue, ex, ey)
-                    ey += 250
-                    ex = 20
+            self.renderQueue(self.queueList[0], LEFT)
+            self.renderQueue(self.queueList[1], RIGHT)
 
 
 
@@ -65,12 +52,10 @@ class InfoInvocador:
 
 
 
-    def renderQueue(self, queue,ex,ey):
-        #Renderizar as informações do elo Solo Duo 5x5 
+    def renderQueue(self, queue,l):
+        #Renderizar as informações das filas ranqueadas 
         self.frameQueue = Frame(self.root, bg = bg, bd = 2, relief = SUNKEN, padx = 20)
-        self.frameQueue.pack(anchor = E)
-        self.frameQueue.place(x = ex, y = ey)
-       
+        self.frameQueue.pack(anchor = N, side = l, padx = 40, pady = 50)
         leagueId = queue["leagueId"]
         league = api_service.getFullLeague(leagueId, self.key)
 
@@ -80,20 +65,29 @@ class InfoInvocador:
         numVD = str(queue["wins"])+"/"+str(queue["losses"])
 
 
-        Label(self.frameQueue, text = queue["queueType"], pady = 8, bg = bg, fg = fg,font = ("Verdana",20, "bold","italic","underline")).grid(column = 0, row = 0, columnspan = 2)
+        Label(self.frameQueue, text = queue["queueType"].replace("_", " "), pady = 8, bg = bg, fg = fg,font = ("Verdana",20, "bold","italic","underline")).grid(column = 0, row = 0, columnspan = 2)
 
 
         Label(self.frameQueue, text = leagueName, bg = bg, fg = fg, font = ("Verdana",20,"bold")).grid(column = 0, row = 1, columnspan = 2)
-
-        Label(self.frameQueue, text = "Divisão: ", bg = bg, fg = fg, font  = ("Verdana",15)).grid(column = 0, row = 2)
-
-        self.labelElo = Label(self.frameQueue, text = elo, bg = bg, fg = fg,font = ("Verdana",15, "bold"), pady = 10)
-        self.labelElo.grid(column = 1, row = 2)
         
-        Label(self.frameQueue, text = "Pontos de Liga: ", bg = bg, fg = fg, font = ("Verdana",15)).grid(column = 0, row = 3)
-        Label(self.frameQueue, text = pdl, bg = bg, fg = fg,font =("Verdana",15, "bold"), pady = 15).grid(column = 1, row = 3)
 
-        Label(self.frameQueue, text = "Vitorias/Derrotas: ", bg = bg, fg = fg, font = ("Verdana", 15)).grid(column = 0, row = 4)
-        Label(self.frameQueue, text = numVD, bg = bg, fg = fg, font = ("Verdana",15,"bold"), pady = 15).grid(column = 1, row = 4)
+        self.divis = Frame(self.frameQueue, bg = bg)
+        self.divis.grid(row = 2, columnspan = 2)
+        #Label(self.frameQueue, text = "Divisão: ", bg = bg, fg = fg, font  = ("Verdana",15)).grid(column = 0, row = 2)
+        Label(self.divis, text = "Divisão: ", bg = bg, fg = fg, font  = ("Verdana",15)).pack(anchor = CENTER, side = LEFT)
 
+        #self.labelElo = Label(self.frameQueue, text = elo, bg = bg, fg = fg,font = ("Verdana",15, "bold"), pady = 10)
+        #self.labelElo.grid(column = 1, row = 2)
+        self.labelElo = Label(self.divis, text = elo, bg = bg, fg = fg,font = ("Verdana",15, "bold"), pady = 10)
+        self.labelElo.pack(anchor = CENTER, side =LEFT)
 
+        self.pdlFrame = Frame(self.frameQueue, bg = bg)
+        self.pdlFrame.grid(row = 3, columnspan = 2)
+
+        Label(self.pdlFrame, text = "Pontos de Liga: ", bg = bg, fg = fg, font = ("Verdana",15)).pack(anchor = CENTER, side = LEFT)
+        Label(self.pdlFrame, text = pdl, bg = bg, fg = fg,font =("Verdana",15, "bold"), pady = 15).pack(anchor = CENTER, side = LEFT)
+
+        self.winLoseFrame = Frame(self.frameQueue, bg = bg)
+        self.winLoseFrame.grid(row = 4, columnspan = 2)
+        Label(self.winLoseFrame, text = "Vitorias/Derrotas: ", bg = bg, fg = fg, font = ("Verdana", 15)).pack(anchor = CENTER, side = LEFT)
+        Label(self.winLoseFrame, text = numVD, bg = bg, fg = fg, font = ("Verdana",15,"bold"), pady = 15).pack(anchor = CENTER, side = LEFT)

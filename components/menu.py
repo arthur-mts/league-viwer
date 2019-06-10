@@ -21,10 +21,8 @@ class MenuAut:
         self.root.geometry("900x700")
         self.root["background"] = bg
         self.root.update()
-
-
+ 
         self.container = Frame(self.root, bg = bg)
-                #self.container.pack()
         self.container.grid(row = 0, column = 2, columnspan = 2)
         self.container.place(x = 340, y = 0)
         # Redimensionando logo
@@ -71,7 +69,6 @@ class MenuAut:
     def renderAutenticar(self):
         self.container2 = Frame(self.root, bg = bg)
         self.container2["pady"] = 10
-        #self.container2.pack(side = LEFT)
         self.container2.grid(column = 2, row = 0, columnspan = 2)
         self.container2.place(x= 250, y = 200)
         self.textoAut = Label(self.container2, text="Digite sua chave de acesso: ", bg = bg, width = 40)
@@ -79,22 +76,12 @@ class MenuAut:
         self.textoAut.grid(column = 0, row = 0, sticky = E)
         self.keyEnter = Entry(self.container2, fg = fg, width = 40)
         self.keyEnter.grid(column = 0, row = 1, pady = 20)
-        #self.keyEnter.pack(side=LEFT)
-        #self.container3 = Frame(self.root)
-        #self.container3.pack()
-        #self.container3.grid()
         self.botaoAut = Button(self.container2, text="Autenticar")
         self.botaoAut["command"] = self.actionAutenticar
         self.botaoAut.grid(row = 2)
-        #self.botaoAut.pack(side=TOP)
     
 
     def renderOpcoes(self):
-        #self.container2 = Frame(self.root, highlightbackground="red", highlightcolor="red", highlightthickness=1, pady = 20)
-#, pady=50, padx=20
-        #self.container2.pack(side = LEFT)
-        #self.container2.grid(co)
-
         self.invocador = api_service.checarInvSalvo()
 
         self.status = api_service.statusServidor(self.key)
@@ -119,10 +106,6 @@ class MenuAut:
         
 
         self.frameInvSalvo = Frame(self.root, width=100, height=100, bg = bg)
-        #self.frameInvSalvo.pack(side = LEFT)
-
-        self.frameInvSalvo.grid(row = 1, column = 0, pady=20)
-        #print(self.root.grid_location(50,0 ))        
         self.frameInvSalvo.place(x = 20, y = 380)   
 
         icon = api_service.iconeInv(self.invocador)
@@ -130,10 +113,6 @@ class MenuAut:
         icon = icon.resize((75, 75), Image.ANTIALIAS)
         self.imgIcon  = ImageTk.PhotoImage(icon)
 
-        #self.canvasImg = Canvas(self.frameInvSalvo, width = 75, height = 75)
-        #self.canvasImg.grid(column = 0, row = 0)
-        #self.canvasImg.create_image((0,0),image = self.imgIcon, anchor = NW)
-        #self.canvasImg.image = self.imgIcon
         self.labelImg = Label(self.frameInvSalvo, image = self.imgIcon)
         self.labelImg.grid(row = 0, column = 0, sticky = E)
         
@@ -156,12 +135,6 @@ class MenuAut:
         #self.frameInv.pack(side = BOTTOM, ensure = LEFT)
         self.frameInv.grid(row = 1, pady = 20) 
         self.frameInv.place(x = 10, y = 250)
-
-        #self.labelTxt = Label(self.frameInv, text = "Digite seu nome invocador: ")
-        #self.labelTxt["font"] = ("Nerdfont", 10,"bold")
-        #self.labelTxt.grid(column = 0,row = 0, sticky = E)
-        #self.labelTxt.pack(side = LEFT)
-
         self.inputNome = Entry(self.frameInv, width=25, font="bold", fg=fg)
         self.inputNome.insert(0, "Digite seu nome invocador: ")
         self.inputNome.grid(row = 0, column = 0, pady = 15)
@@ -170,19 +143,6 @@ class MenuAut:
         self.botaoSalvar["command"] = self.actionSalvarInvoc
         self.botaoSalvar.grid(row = 1, column = 0)
 
-
-
-                #self.inputNome.pack()
-
-        #self.frameBot = Frame(self.frameInv)
-        #self.frameBot.grid(row = 1, columnspan = 2)
-        #self.frameBot.pack()
-
-                #self.botaoSalvar.grid(rowspan = 2)
-        #self.botaoSalvar.grid(row = 2, column = 1)
-
-        
-    
     def actionSalvarInvoc(self):
         nome = self.inputNome.get()
         invoc = menu_service.summonerByName(nome, self.key) 
