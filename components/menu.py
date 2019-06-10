@@ -1,4 +1,5 @@
 import json
+import os
 from tkinter import *
 #Não consigo abrir o arquivo da mesma pasta no linux. talvez tenha q tirar na versao final
 from components import viewInvocador, viewEstatistica
@@ -56,7 +57,7 @@ class MenuAut:
             self.botaoAut["text"] = "Chave validada!"
             self.botaoAut["bg"] = "green"
             validado = {'senha': self.key}
-            with open("../src/dados/key.json", "w", encoding='utf-8') as arquivo:
+            with open("../src/dados/key.json", "w+", encoding='utf-8') as arquivo:
                 json.dump(validado, arquivo)
                 arquivo.close()
             self.container2.destroy()
