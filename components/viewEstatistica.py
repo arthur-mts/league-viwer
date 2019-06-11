@@ -32,3 +32,9 @@ class EstatisticasInvo:
         self.painel = Label(self.container, image=self.logoImg, bg = bg)
         self.painel.image = self.logoImg
         self.painel.pack(anchor=W, fill=Y, side=TOP)
+
+        self.campeoes = menu_service.mostPlayedChampions(self.invocador.id, self.key)
+        self.idCampeoes =[for champ in self.campeoes]
+        print(self.campeoes)
+        #self.matches = api_service.getLastMatches(self.invocador.id, key)
+        #api_service.filterMatchesChampions(self.key, self.matches, )
