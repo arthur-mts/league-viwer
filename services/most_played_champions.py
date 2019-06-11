@@ -1,14 +1,13 @@
 import requests
 
-URL = "https://br1.api.riotgames.com/lol/"
+URL = "https://br1.api.riotgames.com/lol/champion-mastery/v4/champion-masteries/by-summoner/"
 image = "http://ddragon.leagueoflegends.com/cdn/img/champion/splash/"
 ending = "_0.jpg"
-images = []
 champions = requests.get("http://ddragon.leagueoflegends.com/cdn/9.11.1/data/pt_BR/champion.json").json()
 
 
 def most_played_champions(summoner, key):
-    end = "champion-mastery/v4/champion-masteries/by-summoner/" + summoner + "?api_key=" + key
+    end = summoner + "?api_key=" + key
     result = requests.get(URL + end).json()
     dictionary = [{}, {}, {}]
     for key in (champions["data"].keys()):
@@ -20,6 +19,7 @@ def most_played_champions(summoner, key):
                 dictionary[i]["Score"] = result[i]["championPoints"]
                 dictionary[i]["Chest"] = result[i]["chestGranted"]
                 dictionary[i]["Tags"] = champions["data"][key]["tags"]
+                dictionary[i]["ID"] = result[i]["championId"]
                 dictionary[i]["Image"] = get_image(champions["data"][key]["id"])
     return dictionary
 

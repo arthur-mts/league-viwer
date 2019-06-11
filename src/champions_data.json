@@ -1,0 +1,43 @@
+{
+   "anyone": [
+      {
+         "Name": "Nidalee",
+         "Title": "a Ca\u00e7adora Bestial",
+         "Mastery": 5,
+         "Score": 34836,
+         "Chest": false,
+         "Tags": [
+            "Assassin",
+            "Mage"
+         ],
+         "ID": 76,
+         "Image": "http://ddragon.leagueoflegends.com/cdn/img/champion/splash/Nidalee_0.jpg"
+      },
+      {
+         "Name": "Gragas",
+         "Title": "o Badernista",
+         "Mastery": 5,
+         "Score": 30654,
+         "Chest": false,
+         "Tags": [
+            "Fighter",
+            "Mage"
+         ],
+         "ID": 79,
+         "Image": "http://ddragon.leagueoflegends.com/cdn/img/champion/splash/Gragas_0.jpg"
+      },
+      {
+         "Name": "Vayne",
+         "Title": "a Ca\u00e7adora Noturna",
+         "Mastery": 5,
+         "Score": 29026,
+         "Chest": false,
+         "Tags": [
+            "Marksman",
+            "Assassin"
+         ],
+         "ID": 67,
+         "Image": "http://ddragon.leagueoflegends.com/cdn/img/champion/splash/Vayne_0.jpg"
+      }
+   ]
+}
