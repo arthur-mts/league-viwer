@@ -20,8 +20,8 @@ colours = {"Fighter": "#933A16",
 answer = {True: "Sim", False: "Não"}
 colour = {True: "#50C878", False: "#CA3433"}
 
-search = menu_service.summonerByName("Anyone", "RGAPI-adb52a9b-f125-4790-94bd-e25938521155")
-dictionary = most_played_champions.most_played_champions(search.id, "RGAPI-adb52a9b-f125-4790-94bd-e25938521155")
+search = menu_service.summonerByName("Anyone", "RGAPI-92b2157f-c7f6-4a2d-a4d2-aedb3352dbf5")
+dictionary = most_played_champions.most_played_champions(search.id, "RGAPI-92b2157f-c7f6-4a2d-a4d2-aedb3352dbf5")
 
 with open("../src/champions_data.json", "r") as file:
     data = json.load(file)
@@ -44,11 +44,8 @@ class Screen:
         # Title
         self.first = Frame(master)
         self.first.pack()
-        self.title = Label(self.first)
-        self.title["text"] = "Campeões Mais Jogados"
-        self.title["fg"] = "Snow"
-        self.title["bg"] = back
-        self.title["font"] = ("Verdana", "30", "italic", "bold")
+        self.title = Label(self.first, text="Campeões Mais Jogados", fg="Snow", bg=back, font=("Verdana", "30",
+                                                                                               "italic", "bold"))
         self.title.pack()
 
         # First champion
@@ -78,10 +75,10 @@ class Screen:
     # Render images
     def render(self, number, x, y, master):
         link = urlopen(dictionary[number]["Image"]).read()
-        data = Image.open(io.BytesIO(link))
-        width, height = data.size
-        data = data.resize((width // 4, height // 4), Image.ANTIALIAS)
-        image = ImageTk.PhotoImage(data)
+        archive = Image.open(io.BytesIO(link))
+        width, height = archive.size
+        archive = archive.resize((width // 4, height // 4), Image.ANTIALIAS)
+        image = ImageTk.PhotoImage(archive)
         image = image
         show = Label(master, image=image, bg=back)
         show.image = image
@@ -90,14 +87,14 @@ class Screen:
     # Render info
     def info(self, frame, i):
         Label(frame, text="Nome:", fg=front, bg=back, font=default).grid(row=0)
-        Label(frame, text=dictionary[i]["Name"] + ", " + dictionary[i]["Title"], fg=colours[dictionary[i]["Tags"][0]],
-              bg=back, font=default).grid(row=0, column=1)
-        Label(frame, text="Masteria:", fg=front, bg=back, font=default).grid(row=1)
-        Label(frame, text=dictionary[i]["Mastery"], fg=front, bg=back, font=default).grid(row=1, column=1)
-        Label(frame, text="Pontos de Masteria:", fg=front, bg=back, font=default).grid(row=2)
-        Label(frame, text=dictionary[i]["Score"], fg=front, bg=back, font=default).grid(row=2, column=1)
+        Label(frame, text=data[search.name][i]["Name"] + ", " + data[search.name][i]["Title"],
+              fg=colours[data[search.name][i]["Tags"][0]], bg=back, font=default).grid(row=0, column=1)
+        Label(frame, text="Maestria:", fg=front, bg=back, font=default).grid(row=1)
+        Label(frame, text=data[search.name][i]["Mastery"], fg=front, bg=back, font=default).grid(row=1, column=1)
+        Label(frame, text="Pontos de Maestria:", fg=front, bg=back, font=default).grid(row=2)
+        Label(frame, text=data[search.name][i]["Score"], fg=front, bg=back, font=default).grid(row=2, column=1)
         Label(frame, text="Baú ganho:", fg=front, bg=back, font=default).grid(row=3)
-        Label(frame, text=answer[dictionary[i]["Chest"]], fg=colour[dictionary[i]["Chest"]], bg=back,
+        Label(frame, text=answer[data[search.name][i]["Chest"]], fg=colour[data[search.name][i]["Chest"]], bg=back,
               font=default).grid(row=3, column=1)
 
 
