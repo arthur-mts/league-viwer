@@ -1,6 +1,6 @@
 from tkinter import *
 from PIL import Image, ImageTk
-from services import *
+from services import api_service, menu_service
 
 global bg
 bg = "#182422"
@@ -33,8 +33,8 @@ class EstatisticasInvo:
         self.painel.image = self.logoImg
         self.painel.pack(anchor=W, fill=Y, side=TOP)
 
-        self.campeoes = menu_service.mostPlayedChampions(self.invocador.id, self.key)
-        self.idCampeoes =[for champ in self.campeoes]
-        print(self.campeoes)
-        #self.matches = api_service.getLastMatches(self.invocador.id, key)
-        #api_service.filterMatchesChampions(self.key, self.matches, )
+        self.matches = api_service.getLastMatches(self.invocador.accountId, key)
+        self.idCampeoes = menu_service.mostPlayedChampions(self.invocador.id, self.key, idC=True)
+        print(self.idCampeoes)
+        lastMatches = api_service.filterMatchesChampions(self.key, self.matches, self.idCampeoes, self.invocador)
+        print(lastMatches)

@@ -41,13 +41,15 @@ def championByName(name, key):
 
 
 
-def mostPlayedChampions(sumn_id, key):
+def mostPlayedChampions(sumn_id, key, idC = False):
     generateJsonChamps()
     end = "champion-mastery/v4/champion-masteries/by-summoner/"+sumn_id+"?api_key="+key
     res = requests.get(url+end).json()
     champs = []
+    print(len(res))
     for key in(jsonchamps["data"].keys()):
         for i in range(3):
             if(jsonchamps["data"][key]["key"] == str(res[i]["championId"])):
                 champs.append(jsonchamps["data"][key])
-    return champs            
+
+    return [champ["key"] for champ in champs] if idC else champs

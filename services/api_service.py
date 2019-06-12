@@ -70,7 +70,8 @@ def getFullLeague(leagueId, key):
 
 
 def getLastMatches(invId, key):
-    url = "https://br1.api.riotgames.com/lol/match/v4/matchlists/by-account/"+indId+"?api_key="+key
+    #?endIndex=25: quantidade de partidas para serem capturadas
+    url = "https://br1.api.riotgames.com/lol/match/v4/matchlists/by-account/"+invId+"?endIndex=25&api_key="+key
     res = requests.get(url).json()
     return res["matches"]
 
@@ -78,20 +79,27 @@ def getLastMatches(invId, key):
 #Pegar partidas jogadas por um invocador com determinados campeoes
 def filterMatchesChampions(key, matches, idChampions, inv):
     #Vitorias e derrotas com o campeão
+    print(idChampions)
     winsLosesByChampion = {idChampions[0]: [0,0], idChampions[1]: [0,0], idChampions[2]: [0,0]}
     for mat in matches:
         #Baixar resultados de cada partida separadamente
-        urlMat = "https://br1.api.riotgames.com/lol/match/v4/matches/"+mat["gameId"]+"?api_key="+key 
+        urlMat = "https://br1.api.riotgames.com/lol/match/v4/matches/"+str(mat["gameId"])+"?api_key="+key 
         resMat = requests.get(urlMat).json()
         idPlayerInMatch = None
+
+
         #Encontrar o ID do invocador dentro da partida
         for player in resMat["participantIdentities"]:
             if player["player"]["summonerName"] == inv.name:
                 idPlayerInMatch = int(player["participantId"])
                 break
+
+
         #Pegar informações individuais do invocador na partida
-        playerStatusInMatch = resMat["participants"][idPlayerInMatch]
-        idChampionInMatch = int(playerStatusInMatch["championId"])
+        playerStatusInMatch = resMat["participants"][idPlayerInMatch-1]
+        idChampionInMatch = str(playerStatusInMatch["championId"])
+
+
         #Verificar se o campeão escolhido na partida é um dos mains do invocador
         if idChampionInMatch in idChampions:
             #Verificar se o invocador ganhou ou perdeu o jogo
@@ -100,5 +108,4 @@ def filterMatchesChampions(key, matches, idChampions, inv):
                 winsLosesByChampion[idChampionInMatch][0] += 1
             else:
                 winsLosesByChampion[idChampionInMatch][1] += 1
-
-    print(winsLosesByChampion)
+    return winsLosesByChampion
