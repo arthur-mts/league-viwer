@@ -35,6 +35,6 @@ class EstatisticasInvo:
 
         self.matches = api_service.getLastMatches(self.invocador.accountId, key)
         self.idCampeoes = menu_service.mostPlayedChampions(self.invocador.id, self.key, idC=True)
-        print(self.idCampeoes)
-        lastMatches = api_service.filterMatchesChampions(self.key, self.matches, self.idCampeoes, self.invocador)
-        print(lastMatches)
+        lastMatches = api_service.filterMatchesMainChampions(self.key, self.matches, self.idCampeoes, self.invocador)
+
+        lastMatches1 = api_service.filterMatchesMostPlayedChampions(self.key, self.matches,self.invocador)

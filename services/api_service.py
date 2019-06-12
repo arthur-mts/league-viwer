@@ -1,11 +1,10 @@
-import urllib.request
-import json
-import os
-import requests
+import urllib.request, json, os, requests, operator
 from services import menu_service
 from classes import userwatcher
 from tkinter import *
 from PIL import Image, ImageTk
+
+
 
 def iconeInv(inv):
     #Checar se icone do invocador já existe
@@ -77,9 +76,8 @@ def getLastMatches(invId, key):
 
 
 #Pegar partidas jogadas por um invocador com determinados campeoes
-def filterMatchesChampions(key, matches, idChampions, inv):
+def filterMatchesMainChampions(key, matches, idChampions, inv):
     #Vitorias e derrotas com o campeão
-    print(idChampions)
     winsLosesByChampion = {idChampions[0]: [0,0], idChampions[1]: [0,0], idChampions[2]: [0,0]}
     for mat in matches:
         #Baixar resultados de cada partida separadamente
@@ -109,3 +107,39 @@ def filterMatchesChampions(key, matches, idChampions, inv):
             else:
                 winsLosesByChampion[idChampionInMatch][1] += 1
     return winsLosesByChampion
+
+
+def filterMatchesMostPlayedChampions(key, matches, inv):
+    idChampions = []
+    for mat in matches:
+        #Baixar resultados de cada partida separadamente
+        urlMat = "https://br1.api.riotgames.com/lol/match/v4/matches/"+str(mat["gameId"])+"?api_key="+key 
+        resMat = requests.get(urlMat).json()
+        idPlayerInMatch = None
+
+        #Encontrar o ID do invocador dentro da partida
+        for player in resMat["participantIdentities"]:
+            if player["player"]["summonerName"] == inv.name:
+                idPlayerInMatch = int(player["participantId"])
+                break
+
+
+        #Pegar informações individuais do invocador na partida
+        playerStatusInMatch = resMat["participants"][idPlayerInMatch-1]
+        idChampionInMatch = str(playerStatusInMatch["championId"])
+        idChampions.append(idChampionInMatch)
+    
+    mostPlayedDict = dict()
+    championsU = list(set(idChampions))
+    mostPlayed = [idChampions.count(i) for i in championsU]
+    maior = 0
+
+    for j in range(len(championsU)):
+        mostPlayedDict[championsU[j]] = mostPlayed[j]
+    print(mostPlayedDict)
+    mostPlayedDict = sorted(mostPlayedDict.items(), key=operator.itemgetter(1))
+
+    print(mostPlayedDict)
+
+           
+
