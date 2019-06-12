@@ -4,7 +4,7 @@
          "Name": "Nidalee",
          "Title": "a Ca\u00e7adora Bestial",
          "Mastery": 5,
-         "Score": 34836,
+         "Score": 35021,
          "Chest": false,
          "Tags": [
             "Assassin",
@@ -38,6 +38,249 @@
          ],
          "ID": 67,
          "Image": "http://ddragon.leagueoflegends.com/cdn/img/champion/splash/Vayne_0.jpg"
+      }
+   ],
+   "Someone": [
+      {
+         "Name": "Lee Sin",
+         "Title": "o Monge Cego",
+         "Mastery": 7,
+         "Score": 143067,
+         "Chest": true,
+         "Tags": [
+            "Fighter",
+            "Assassin"
+         ],
+         "ID": 64,
+         "Image": "http://ddragon.leagueoflegends.com/cdn/img/champion/splash/LeeSin_0.jpg"
+      },
+      {
+         "Name": "Pantheon",
+         "Title": "o Artes\u00e3o da Guerra",
+         "Mastery": 7,
+         "Score": 118732,
+         "Chest": false,
+         "Tags": [
+            "Fighter",
+            "Assassin"
+         ],
+         "ID": 80,
+         "Image": "http://ddragon.leagueoflegends.com/cdn/img/champion/splash/Pantheon_0.jpg"
+      },
+      {
+         "Name": "Diana",
+         "Title": "o Esc\u00e1rnio da Lua",
+         "Mastery": 7,
+         "Score": 106525,
+         "Chest": true,
+         "Tags": [
+            "Fighter",
+            "Mage"
+         ],
+         "ID": 131,
+         "Image": "http://ddragon.leagueoflegends.com/cdn/img/champion/splash/Diana_0.jpg"
+      }
+   ],
+   "Champion": [
+      {
+         "Name": "Draven",
+         "Title": "o Carrasco de Noxus",
+         "Mastery": 7,
+         "Score": 143946,
+         "Chest": true,
+         "Tags": [
+            "Marksman"
+         ],
+         "ID": 119,
+         "Image": "http://ddragon.leagueoflegends.com/cdn/img/champion/splash/Draven_0.jpg"
+      },
+      {
+         "Name": "Nasus",
+         "Title": "o Curador das Areias",
+         "Mastery": 6,
+         "Score": 102050,
+         "Chest": true,
+         "Tags": [
+            "Fighter",
+            "Tank"
+         ],
+         "ID": 75,
+         "Image": "http://ddragon.leagueoflegends.com/cdn/img/champion/splash/Nasus_0.jpg"
+      },
+      {
+         "Name": "Cho'Gath",
+         "Title": "o Terror do Vazio",
+         "Mastery": 6,
+         "Score": 73909,
+         "Chest": true,
+         "Tags": [
+            "Tank",
+            "Mage"
+         ],
+         "ID": 31,
+         "Image": "http://ddragon.leagueoflegends.com/cdn/img/champion/splash/Chogath_0.jpg"
+      }
+   ],
+   "Arthur": [
+      {
+         "Name": "Vayne",
+         "Title": "a Ca\u00e7adora Noturna",
+         "Mastery": 2,
+         "Score": 5741,
+         "Chest": false,
+         "Tags": [
+            "Marksman",
+            "Assassin"
+         ],
+         "ID": 67,
+         "Image": "http://ddragon.leagueoflegends.com/cdn/img/champion/splash/Vayne_0.jpg"
+      },
+      {
+         "Name": "Blitzcrank",
+         "Title": "o Grande Golem a Vapor",
+         "Mastery": 2,
+         "Score": 2144,
+         "Chest": false,
+         "Tags": [
+            "Tank",
+            "Fighter"
+         ],
+         "ID": 53,
+         "Image": "http://ddragon.leagueoflegends.com/cdn/img/champion/splash/Blitzcrank_0.jpg"
+      },
+      {
+         "Name": "Ezreal",
+         "Title": "o Explorador Pr\u00f3digo",
+         "Mastery": 1,
+         "Score": 1660,
+         "Chest": false,
+         "Tags": [
+            "Marksman",
+            "Mage"
+         ],
+         "ID": 81,
+         "Image": "http://ddragon.leagueoflegends.com/cdn/img/champion/splash/Ezreal_0.jpg"
+      }
+   ],
+   "O Protagonista": [
+      {
+         "Name": "Lee Sin",
+         "Title": "o Monge Cego",
+         "Mastery": 7,
+         "Score": 288884,
+         "Chest": true,
+         "Tags": [
+            "Fighter",
+            "Assassin"
+         ],
+         "ID": 64,
+         "Image": "http://ddragon.leagueoflegends.com/cdn/img/champion/splash/LeeSin_0.jpg"
+      },
+      {
+         "Name": "Thresh",
+         "Title": "o Guardi\u00e3o das Correntes",
+         "Mastery": 7,
+         "Score": 258753,
+         "Chest": true,
+         "Tags": [
+            "Support",
+            "Fighter"
+         ],
+         "ID": 412,
+         "Image": "http://ddragon.leagueoflegends.com/cdn/img/champion/splash/Thresh_0.jpg"
+      },
+      {
+         "Name": "Darius",
+         "Title": "a M\u00e3o de Noxus",
+         "Mastery": 7,
+         "Score": 155889,
+         "Chest": true,
+         "Tags": [
+            "Fighter",
+            "Tank"
+         ],
+         "ID": 122,
+         "Image": "http://ddragon.leagueoflegends.com/cdn/img/champion/splash/Darius_0.jpg"
+      }
+   ],
+   "0 Protagonista": [
+      {
+         "Name": "Lee Sin",
+         "Title": "o Monge Cego",
+         "Mastery": 7,
+         "Score": 243391,
+         "Chest": false,
+         "Tags": [
+            "Fighter",
+            "Assassin"
+         ],
+         "ID": 64,
+         "Image": "http://ddragon.leagueoflegends.com/cdn/img/champion/splash/LeeSin_0.jpg"
+      },
+      {
+         "Name": "Zed",
+         "Title": "o Mestre das Sombras",
+         "Mastery": 7,
+         "Score": 210976,
+         "Chest": true,
+         "Tags": [
+            "Assassin"
+         ],
+         "ID": 238,
+         "Image": "http://ddragon.leagueoflegends.com/cdn/img/champion/splash/Zed_0.jpg"
+      },
+      {
+         "Name": "Thresh",
+         "Title": "o Guardi\u00e3o das Correntes",
+         "Mastery": 7,
+         "Score": 142963,
+         "Chest": true,
+         "Tags": [
+            "Support",
+            "Fighter"
+         ],
+         "ID": 412,
+         "Image": "http://ddragon.leagueoflegends.com/cdn/img/champion/splash/Thresh_0.jpg"
+      }
+   ],
+   "0 F\u00edgurante": [
+      {
+         "Name": "Mordekaiser",
+         "Title": "o Reven\u00e3 de Ferro",
+         "Mastery": 7,
+         "Score": 252945,
+         "Chest": true,
+         "Tags": [
+            "Fighter"
+         ],
+         "ID": 82,
+         "Image": "http://ddragon.leagueoflegends.com/cdn/img/champion/splash/Mordekaiser_0.jpg"
+      },
+      {
+         "Name": "Ashe",
+         "Title": "a Arqueira do Gelo",
+         "Mastery": 7,
+         "Score": 64143,
+         "Chest": false,
+         "Tags": [
+            "Marksman",
+            "Support"
+         ],
+         "ID": 22,
+         "Image": "http://ddragon.leagueoflegends.com/cdn/img/champion/splash/Ashe_0.jpg"
+      },
+      {
+         "Name": "Varus",
+         "Title": "a Flecha da Vingan\u00e7a",
+         "Mastery": 6,
+         "Score": 49238,
+         "Chest": false,
+         "Tags": [
+            "Marksman",
+            "Mage"
+         ],
+         "ID": 110,
+         "Image": "http://ddragon.leagueoflegends.com/cdn/img/champion/splash/Varus_0.jpg"
       }
    ]
 }

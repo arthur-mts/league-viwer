@@ -1,4 +1,5 @@
 import requests
+import json
 
 URL = "https://br1.api.riotgames.com/lol/champion-mastery/v4/champion-masteries/by-summoner/"
 image = "http://ddragon.leagueoflegends.com/cdn/img/champion/splash/"
@@ -26,3 +27,16 @@ def most_played_champions(summoner, key):
 
 def get_image(name):
     return image + name + ending
+
+
+def update_info(player, data, array, key):
+    dictionary = most_played_champions(player.id, key)
+
+    data[player.name] = dictionary
+    array[player.name] = [dictionary[i]["ID"] for i in range(3)]
+
+    with open("../src/champions_data.json", "w") as file:
+        json.dump(data, file, indent=3)
+
+    with open("../src/champions.json", "w") as file:
+        json.dump(array, file, indent=3)
