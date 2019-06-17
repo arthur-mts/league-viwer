@@ -22,7 +22,6 @@ class MenuAut:
         self.root.geometry("900x700")
         self.root["background"] = bg
         self.root.update()
- 
         self.container = Frame(self.root, bg = bg)
         self.container.grid(row = 0, column = 2, columnspan = 2)
         self.container.place(x = 340, y = 0)

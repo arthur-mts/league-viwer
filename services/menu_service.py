@@ -40,7 +40,7 @@ def championByName(name, key):
     return champ if (find) else "ERRO"
 
 
-
+#Lista de 3 campeões mais jogados. caso idC so vai retornar as chaves public void onClick(View view) {
 def mostPlayedChampions(sumn_id, key, idC = False):
     generateJsonChamps()
     end = "champion-mastery/v4/champion-masteries/by-summoner/"+sumn_id+"?api_key="+key

@@ -33,8 +33,18 @@ class EstatisticasInvo:
         self.painel.image = self.logoImg
         self.painel.pack(anchor=W, fill=Y, side=TOP)
 
+        #Lista de ultimas partidas jogadas pelo invocador
         self.matches = api_service.getLastMatches(self.invocador.accountId, key)
-        self.idCampeoes = menu_service.mostPlayedChampions(self.invocador.id, self.key, idC=True)
-        lastMatches = api_service.filterMatchesMainChampions(self.key, self.matches, self.idCampeoes, self.invocador)
-
-        lastMatches1 = api_service.filterMatchesMostPlayedChampions(self.key, self.matches,self.invocador)
+        #Id dos campeões mais jogados
+        self.idsMains = menu_service.mostPlayedChampions(self.invocador.id, self.key, idC=True)
+        #Ids dos campeões mais jogados ultimamente
+        self.idsLast = api_service.filterMostPlayedChampions(self.key, self.matches, self.invocador)
+        
+        #Ultimas partidas dos campeões mais jogados pelo invocador.
+        self.lastMainMatches = api_service.filterMatchesByChampions(self.key, self.matches, self.idsMains, self.invocador)
+        
+        #Partidas dos campeões mais jogados ultimamente pelo invocador.
+        self.lastMostMatches = api_service.filterMatchesByChampions(self.key, self.matches,self.idsLast, self.invocador)
+        
+        print(self.lastMainMatches)
+        print(self.lastMostMatches)

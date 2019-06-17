@@ -1,4 +1,4 @@
-import urllib.request, json, os, requests, operator
+import urllib.request, json, os, requests, operator, collections
 from services import menu_service
 from classes import userwatcher
 from tkinter import *
@@ -76,7 +76,7 @@ def getLastMatches(invId, key):
 
 
 #Pegar partidas jogadas por um invocador com determinados campeoes
-def filterMatchesMainChampions(key, matches, idChampions, inv):
+def filterMatchesByChampions(key, matches, idChampions, inv):
     #Vitorias e derrotas com o campeão
     winsLosesByChampion = {idChampions[0]: [0,0], idChampions[1]: [0,0], idChampions[2]: [0,0]}
     for mat in matches:
@@ -108,8 +108,8 @@ def filterMatchesMainChampions(key, matches, idChampions, inv):
                 winsLosesByChampion[idChampionInMatch][1] += 1
     return winsLosesByChampion
 
-
-def filterMatchesMostPlayedChampions(key, matches, inv):
+#Capturar ids dos campeões mais jogados nas ultimas 20 partidas
+def filterMostPlayedChampions(key, matches, inv):
     idChampions = []
     for mat in matches:
         #Baixar resultados de cada partida separadamente
@@ -132,14 +132,15 @@ def filterMatchesMostPlayedChampions(key, matches, inv):
     mostPlayedDict = dict()
     championsU = list(set(idChampions))
     mostPlayed = [idChampions.count(i) for i in championsU]
-    maior = 0
+    mostPlayedChampionsId = []
 
     for j in range(len(championsU)):
         mostPlayedDict[championsU[j]] = mostPlayed[j]
-    print(mostPlayedDict)
-    mostPlayedDict = sorted(mostPlayedDict.items(), key=operator.itemgetter(1))
 
-    print(mostPlayedDict)
+    sortedDict = dict()
+    #Colocando os items em ordem crescente de vitorias
+    for it in sorted(mostPlayedDict.items(), key=operator.itemgetter(1))[::-1]:
+        mostPlayedChampionsId.append(it[0])
 
-           
-
+    print(mostPlayedChampionsId)
+    return mostPlayedChampionsId[:3]
