@@ -42,9 +42,12 @@ class EstatisticasInvo:
         
         #Ultimas partidas dos campeões mais jogados pelo invocador.
         self.lastMainMatches = api_service.filterMatchesByChampions(self.key, self.matches, self.idsMains, self.invocador)
-        
+        print(self.lastMainMatches)
         #Partidas dos campeões mais jogados ultimamente pelo invocador.
         self.lastMostMatches = api_service.filterMatchesByChampions(self.key, self.matches,self.idsLast, self.invocador)
-        
-        print(self.lastMainMatches)
         print(self.lastMostMatches)
+        #Convertendo os ids para objetos do tipo campeão
+        self.listaChamp1 = [menu_service.champById(c) for c in self.lastMainMatches.keys()]
+        self.listaChamp2 = [menu_service.champById(c) for c in self.lastMostMatches.keys()]
+        print([c.name for c in self.listaChamp1])
+        print([c.name for c in self.listaChamp2])

@@ -142,5 +142,4 @@ def filterMostPlayedChampions(key, matches, inv):
     for it in sorted(mostPlayedDict.items(), key=operator.itemgetter(1))[::-1]:
         mostPlayedChampionsId.append(it[0])
 
-    print(mostPlayedChampionsId)
     return mostPlayedChampionsId[:3]
