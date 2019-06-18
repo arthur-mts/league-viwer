@@ -26,23 +26,16 @@ key = get_key()
 # Nome
 name = get_name()
 
-# Dados
-data = get_data()
-
-# IDs
-array = get_array()
-
-# Dados do invocador
-player = summonerByName(name, key)
-
-# Verificar se dados do invocador estão no dicionário
-if player.name not in data:
-    update_info(player, data, array, key)
-
 
 class Screen:
 
     def __init__(self, master=None):
+
+        # Info
+        self.data = get_data()
+        self.array = get_array()
+        self.player = summonerByName(name, key)
+        self.update = update_info(self.player, self.data, self.array, key)
 
         # Janela
         self.window = Tk()
@@ -93,11 +86,12 @@ class Screen:
             # Info
             self.frame = self.second if i == 0 else self.third if i == 1 else self.fourth
             self.info(i)
+        self.window.mainloop()
 
     # Imagens e ícones
     def render(self, i):
         # Imagens
-        link = urlopen(data[player.name][i]["Image"]).read()
+        link = urlopen(self.data[self.player.name][i]["Image"]).read()
         archive = Image.open(io.BytesIO(link))
         width, height = archive.size
         archive = archive.resize((width // 4, height // 4), Image.ANTIALIAS)
@@ -107,7 +101,7 @@ class Screen:
         show.place(x=self.x, y=self.y)
 
         # Ícones
-        archive = Image.open("../src/img/mastery_level_" + str(data[player.name][i]["Mastery"]) + ".png")
+        archive = Image.open("../src/img/mastery_level_" + str(self.data[self.player.name][i]["Mastery"]) + ".png")
         width, height = archive.size
         archive = archive.resize((width // 2, height // 2), Image.ANTIALIAS)
         photo = ImageTk.PhotoImage(archive)
@@ -118,21 +112,23 @@ class Screen:
     # Info
     def info(self, i):
         Label(self.frame, text="Nome:", fg="DarkOrange3", bg="Grey6", font=font).grid(row=0)
-        Label(self.frame, text=data[player.name][i]["Name"] + ", " + data[player.name][i]["Title"],
-              fg=colours[data[player.name][i]["Tags"][0]], bg="Grey6", font=font).grid(row=0, column=1)
+        Label(self.frame, text=self.data[self.player.name][i]["Name"] + ", " + self.data[self.player.name][i]["Title"],
+              fg=colours[self.data[self.player.name][i]["Tags"][0]], bg="Grey6", font=font).grid(row=0, column=1)
         Label(self.frame, text="Maestria:", fg="DarkOrange3", bg="Grey6", font=font).grid(row=1)
-        Label(self.frame, text=data[player.name][i]["Mastery"], fg="DarkOrange3", bg="Grey6", font=font).grid(row=1,
-                                                                                                              column=1)
+        Label(self.frame, text=self.data[self.player.name][i]["Mastery"], fg="DarkOrange3", bg="Grey6",
+              font=font).grid(row=1, column=1)
         Label(self.frame, text="Pontos de Maestria:", fg="DarkOrange3", bg="Grey6", font=font).grid(row=2)
-        Label(self.frame, text=data[player.name][i]["Score"], fg="DarkOrange3", bg="Grey6", font=font).grid(row=2,
-                                                                                                            column=1)
+        Label(self.frame, text=self.data[self.player.name][i]["Score"], fg="DarkOrange3", bg="Grey6",
+              font=font).grid(row=2, column=1)
         Label(self.frame, text="Baú ganho:", fg="DarkOrange3", bg="Grey6", font=font).grid(row=3)
-        Label(self.frame, text=answer[data[player.name][i]["Chest"]], fg=colour[data[player.name][i]["Chest"]],
-              bg="Grey6", font=font).grid(row=3, column=1)
+        Label(self.frame, text=answer[self.data[self.player.name][i]["Chest"]],
+              fg=colour[self.data[self.player.name][i]["Chest"]], bg="Grey6", font=font).grid(row=3, column=1)
 
     # Voltar
     def close(self):
         self.window.destroy()
+        from components.menu import MenuAut
+        MenuAut()
 
 
-getattr(Screen(), "window").mainloop()
+Screen()

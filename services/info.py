@@ -59,7 +59,7 @@ def get_name():
     with open("../src/dados/invocador.json") as file:
         name = json.load(file)
         file.close()
-    return name["invocador"]
+    return name["invocador"]["name"]
 
 
 # Pegar IDs dos campeões mais jogados
