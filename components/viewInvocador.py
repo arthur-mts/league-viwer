@@ -39,8 +39,8 @@ class InfoInvocador:
         if(len(self.queueList) == 0):
             self.labelErro = Label(self.root, text ="Sem dados suficientes!\n Jogue partidas ranqueadas e volte mais tarde!", fg = fg, bg = bg, font = ("Verdana", 20, "bold"))
 
-            self.labelErro.grid(column = 2, row = 1, columnspan = 2)
-            self.labelElo.pack(self.root, side = TOP)
+            #self.labelErro.grid(column = 2, row = 1, columnspan = 2)
+            self.labelErro.pack()
         else:
             self.renderQueue(self.queueList[0], LEFT)
             self.renderQueue(self.queueList[1], RIGHT)

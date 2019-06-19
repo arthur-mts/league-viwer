@@ -85,7 +85,6 @@ def filterMatchesByChampions(key, matches, idChampions, inv):
         resMat = requests.get(urlMat).json()
         idPlayerInMatch = None
 
-
         #Encontrar o ID do invocador dentro da partida
         for player in resMat["participantIdentities"]:
             if player["player"]["summonerName"] == inv.name:
@@ -120,6 +119,7 @@ def filterMostPlayedChampions(key, matches, inv):
         #Encontrar o ID do invocador dentro da partida
         for player in resMat["participantIdentities"]:
             if player["player"]["summonerName"] == inv.name:
+                
                 idPlayerInMatch = int(player["participantId"])
                 break
 
