@@ -1,6 +1,7 @@
 from tkinter import *
 from PIL import Image, ImageTk
 from services import api_service
+
 global bg
 bg = "#182422"
 
@@ -43,12 +44,24 @@ class InfoInvocador:
         else:
             self.renderQueue(self.queueList[0], LEFT)
             self.renderQueue(self.queueList[1], RIGHT)
+        
+
+        self.button = Frame(self.root)
+        self.button.pack()
+        self.button.place(x=30, y=20)
+        self.back = Button(self.button, text="◄ VOLTAR", bg="Grey10", fg="Grey90", font=("Arial Black", "13", "bold",
+                                                                                        "italic"),
+                        bd=2, activebackground="Grey20", activeforeground="Grey90",
+                        relief="solid", height=1, width=15, command=self.close)
+        self.back.pack()
 
 
 
-
-
-
+    def close(self):
+        self.root.destroy()
+        from components import menu
+        self.menuG = menu.MenuAut()
+        
 
     def renderQueue(self, queue,l):
         #Renderizar as informações das filas ranqueadas 

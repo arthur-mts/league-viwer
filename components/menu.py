@@ -2,9 +2,9 @@ import json
 import os
 from tkinter import *
 #Não consigo abrir o arquivo da mesma pasta no linux. talvez tenha q tirar na versao final
-from components import viewInvocador, viewEstatistica
 from services import menu_service, api_service
 from PIL import ImageTk, Image
+
 
 global bg
 bg = "#182422"
@@ -14,7 +14,7 @@ fg = "#F3E171"
 
 
 class MenuAut:
-    def __init__(self):
+    def __init__(self, loop = True):
         #Renderizar imagem de titulo
         self.root = Tk()
         self.root.title("League Viwer")
@@ -49,6 +49,9 @@ class MenuAut:
             self.renderOpcoes()
         else:
             self.renderAutenticar()
+            
+        if not loop:
+            self.root.mainloop()
 
     def actionAutenticar(self):
         self.key = self.keyEnter.get()
@@ -180,14 +183,13 @@ class MenuAut:
 
     def renderQueue(self):
         self.root.destroy()
+        from components import viewInvocador
         viewInvocador.InfoInvocador(self.invocador, self.key)
 
     def renderEstatisticas(self):
         self.root.destroy()
+        from components import viewEstatistica
         viewEstatistica.EstatisticasInvo(self.invocador, self.key)
         
         
-
-menu = MenuAut()
-getattr(menu, "root").mainloop()
-
+MenuAut(loop = False)

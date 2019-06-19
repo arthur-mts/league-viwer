@@ -32,6 +32,23 @@ class EstatisticasInvo:
         self.painel = Label(self.container, image=self.logoImg, bg = bg)
         self.painel.image = self.logoImg
         self.painel.pack(anchor=W, fill=Y, side=TOP)
+        
+        #Botão para voltar
+        self.button = Frame(self.root)
+        self.button.pack()
+        self.button.place(x=30, y=20)
+        self.back = Button(self.button, text="◄ VOLTAR", bg="Grey10", fg="Grey90", font=("Arial Black", "13", "bold",
+                                                                                        "italic"),
+                        bd=2, activebackground="Grey20", activeforeground="Grey90",
+                        relief="solid", height=1, width=15, command=self.close)
+        self.back.pack()
+
+
+
+    def close(self):
+        self.root.destroy()
+        from components import menu
+        self.menuG = menu.MenuAut()
 
         #Lista de ultimas partidas jogadas pelo invocador
         self.matches = api_service.getLastMatches(self.invocador.accountId, key)
@@ -49,5 +66,12 @@ class EstatisticasInvo:
         #Convertendo os ids para objetos do tipo campeão
         self.listaChamp1 = [menu_service.champById(c) for c in self.lastMainMatches.keys()]
         self.listaChamp2 = [menu_service.champById(c) for c in self.lastMostMatches.keys()]
-        print([c.name for c in self.listaChamp1])
-        print([c.name for c in self.listaChamp2])
+        
+        
+
+    def renderChampions(self):
+        self.mainsFrame = Frame(self.root, bd = 2, bg= "white",anchor = W)
+        self.mainsFrame.pack(side = LEFT)
+        
+        self.playedFrame = Frame(self.root, bd = 2, bg= "white",anchor = W)
+        self.mainsFrame.pack(side = RIGHT)
