@@ -31,7 +31,6 @@ class EstatisticasInvo:
         self.painel = Label(self.container, image=self.logoImg, bg = bg)
         self.painel.image = self.logoImg
         self.painel.pack(anchor=W, fill=Y, side=TOP)
-        self.renderMains()
         self.root.update()
         
         #Botão para voltar
@@ -60,28 +59,52 @@ class EstatisticasInvo:
         self.lastMostMatches = api_service.filterMatchesByChampions(self.key, self.matches,self.idsLast, self.invocador)
         print(self.lastMostMatches)
         #Convertendo os ids para objetos do tipo campeão
-        self.champsMain  = {c: menu_service.champById(c) for c in self.lastMainMatches.keys()}
-        self.champsMost = {c: menu_service.champById(c) for c in self.lastMostMatches.keys()}
+        self.champsMain  = [menu_service.champById(c) for c in self.lastMainMatches.keys()]
+        self.champsMost = [menu_service.champById(c) for c in self.lastMostMatches.keys()]
         
+        self.renderMains()
+        
+
         
         
     def renderMains(self):
+        self.mainsFrame = Frame(self.root,  width = 100, height = 100, bg = bg, bd = 2, relief = SUNKEN)
+        #self.mainsFrame.grid(column = 0, row = 0, rowspan = 3)
+        self.mainsFrame.pack(side = LEFT,anchor = N)
+        self.mainsFrame.place(x = 0, y = 150)
         
-        self.mainsFrame = Frame(self.root,  width = 100, height = 100, bg = bg, bd = 2, relief = SUNKEN, padx = 20)
-        
-        self.mainsFrame.pack(side = LEFT,anchor = N, pady = 30, padx = 50)
-        
+        #Titulo da janela
         self.labelMains = Label(self.mainsFrame, text = "Estatisticas com os principais",fg =fg, bg = bg,
-                                font = ("Verdana",20, "bold","italic","underline")).grid(columnSpan = 2, column = 0, row = 0)
+                                font = ("Verdana",15, "bold","italic","underline"))
+        self.labelMains.grid(row = 0,column = 0, columnspan = 3, pady = 10)
+        
+        #Imagem do campeão
+        champ = self.champsMain[0]
+        splash = api_service.getIconByName(champ.name)
+        width, height = splash.size
+        #splash = splash.resize((width // 7, height // 7), Image.ANTIALIAS)
+        img = ImageTk.PhotoImage(splash)
+        self.lsplash = Label(self.mainsFrame, image = img)
+        self.lsplash.image = img
+        self.lsplash.grid(row = 1, rowspan =2)
+        
+        self.labelName = Label(self.mainsFrame, text = champ.name, font = ("Verdana", 15, "bold")
+                                , fg = fg, bg =bg).grid(row = 1, column = 1)
+        
+        wl = self.lastMainMatches[champ.key]
+        txt = str(wl[0])+"/"+str(wl[1])
+        self.winsLose = Label(self.mainsFrame, text = txt,font = ("Verdana", 15, "bold"),
+                               fg ="red", bg = bg).grid(row = 2, column = 1)
         
         
         
+        #ssself.splashC = api_service.getSplashByName(list(self.champsMost[self.champsMost.keys()[0]].name))
         
-    def renderChampions(self):
-        self.playedFrame = Frame(self.root, width = 100, height = 100,bg = bg, bd = 2, relief = SUNKEN, padx = 20)
         
-        self.playedFrame.pack(side = RIGHT,anchor = N, pady = 30, padx = 50)
-    
+        
+
+        
+        
     def close(self):
         self.root.destroy()
         from components import menu

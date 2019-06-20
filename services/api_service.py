@@ -19,7 +19,7 @@ def iconeInv(inv):
         img = Image.open(img_filename)
         return img
     else:
-        url ="http://ddragon.leagueoflegends.com/cdn/9.11.1/img/profileicon/" + idIcon+".png"
+        url ="http://ddragon.leagueoflegends.com/cdn/9.12.1/img/profileicon/" + idIcon+".png"
         getImg = urllib.request.urlopen(url)
         img = Image.open(getImg)
         if imgFile:
@@ -72,7 +72,17 @@ def getLastMatches(invId, key):
     #?endIndex=25: quantidade de partidas para serem capturadas
     url = "https://br1.api.riotgames.com/lol/match/v4/matchlists/by-account/"+invId+"?endIndex=25&api_key="+key
     res = requests.get(url).json()
-    return res["matches"]
+    listMat = []
+    #Baixar resultados das partidas seperadamente
+    for mat in res["matches"]:
+        urlMat = "https://br1.api.riotgames.com/lol/match/v4/matches/"+str(mat["gameId"])+"?api_key="+key 
+        resMat = requests.get(urlMat).json()
+        listMat.append(resMat)
+        
+    return listMat
+
+
+
 
 
 #Pegar partidas jogadas por um invocador com determinados campeoes
@@ -80,27 +90,25 @@ def filterMatchesByChampions(key, matches, idChampions, inv):
     #Vitorias e derrotas com o campeão
     winsLosesByChampion = {idChampions[0]: [0,0], idChampions[1]: [0,0], idChampions[2]: [0,0]}
     for mat in matches:
-        #Baixar resultados de cada partida separadamente
-        urlMat = "https://br1.api.riotgames.com/lol/match/v4/matches/"+str(mat["gameId"])+"?api_key="+key 
-        resMat = requests.get(urlMat).json()
+        
         idPlayerInMatch = None
 
         #Encontrar o ID do invocador dentro da partida
-        for player in resMat["participantIdentities"]:
+        for player in mat["participantIdentities"]:
             if player["player"]["summonerName"] == inv.name:
                 idPlayerInMatch = int(player["participantId"])
                 break
 
 
         #Pegar informações individuais do invocador na partida
-        playerStatusInMatch = resMat["participants"][idPlayerInMatch-1]
+        playerStatusInMatch = mat["participants"][idPlayerInMatch-1]
         idChampionInMatch = str(playerStatusInMatch["championId"])
 
 
         #Verificar se o campeão escolhido na partida é um dos mains do invocador
         if idChampionInMatch in idChampions:
             #Verificar se o invocador ganhou ou perdeu o jogo
-            win = (resMat["teams"][0]["win"] if idPlayerInMatch <= 5 else resMat["teams"][1]["win"]) == "Win"
+            win = (mat["teams"][0]["win"] if idPlayerInMatch <= 5 else mat["teams"][1]["win"]) == "Win"
             if win:
                 winsLosesByChampion[idChampionInMatch][0] += 1
             else:
@@ -111,13 +119,10 @@ def filterMatchesByChampions(key, matches, idChampions, inv):
 def filterMostPlayedChampions(key, matches, inv):
     idChampions = []
     for mat in matches:
-        #Baixar resultados de cada partida separadamente
-        urlMat = "https://br1.api.riotgames.com/lol/match/v4/matches/"+str(mat["gameId"])+"?api_key="+key 
-        resMat = requests.get(urlMat).json()
         idPlayerInMatch = None
 
         #Encontrar o ID do invocador dentro da partida
-        for player in resMat["participantIdentities"]:
+        for player in mat["participantIdentities"]:
             if player["player"]["summonerName"] == inv.name:
                 
                 idPlayerInMatch = int(player["participantId"])
@@ -125,10 +130,10 @@ def filterMostPlayedChampions(key, matches, inv):
 
 
         #Pegar informações individuais do invocador na partida
-        playerStatusInMatch = resMat["participants"][idPlayerInMatch-1]
+        playerStatusInMatch = mat["participants"][idPlayerInMatch-1]
         idChampionInMatch = str(playerStatusInMatch["championId"])
         idChampions.append(idChampionInMatch)
-    
+        
     mostPlayedDict = dict()
     championsU = list(set(idChampions))
     mostPlayed = [idChampions.count(i) for i in championsU]
@@ -143,3 +148,9 @@ def filterMostPlayedChampions(key, matches, inv):
         mostPlayedChampionsId.append(it[0])
 
     return mostPlayedChampionsId[:3]
+
+def getIconByName(nameC):
+    url = "https://ddragon.leagueoflegends.com/cdn/9.12.1/img/champion/"+nameC+".png"
+    getImg = urllib.request.urlopen(url)
+    return Image.open(getImg)
+    
