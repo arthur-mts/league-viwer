@@ -21,7 +21,6 @@ class MenuAut:
         self.root.resizable(False, False)
         self.root.geometry("900x700")
         self.root["background"] = bg
-        self.root.update()
         self.container = Frame(self.root, bg = bg)
         self.container.grid(row = 0, column = 2, columnspan = 2)
         self.container.place(x = 340, y = 0)
@@ -36,6 +35,8 @@ class MenuAut:
         self.painel.grid_columnconfigure(0, weight = 1)
         self.painel.grid_rowconfigure(0, weight = 1)
         self.painel.pack(anchor=W, fill=Y, expand=False, side=LEFT)
+        self.root.update()
+
 
         try:
             with open("../src/dados/key.json") as r:
