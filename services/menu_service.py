@@ -6,9 +6,7 @@ jsonchamps = 0
 
 
 def validarKey(key):
-    print(key)
     req = requests.get("https://br1.api.riotgames.com/lol/status/v3/shard-data?api_key=" + key).json()
-    print(req)
     return not "status" in req
 
 def generateJsonChamps():
@@ -23,6 +21,7 @@ def summonerByName(name, key):
         return "ERRO"
     else:
         summner = userwatcher.Summoner(res)
+        print(summner)
         return summner
 
 def serverStatus(key):
@@ -40,14 +39,21 @@ def championByName(name, key):
     return champ if (find) else "ERRO"
 
 
-
-def mostPlayedChampions(sumn_id, key):
+#Lista de 3 campeões mais jogados. caso idC so vai retornar as chaves public void onClick(View view) {
+def mostPlayedChampions(sumn_id, key, idC = False):
     generateJsonChamps()
     end = "champion-mastery/v4/champion-masteries/by-summoner/"+sumn_id+"?api_key="+key
     res = requests.get(url+end).json()
-    txt  = ""
+    champs = []
     for key in(jsonchamps["data"].keys()):
         for i in range(3):
             if(jsonchamps["data"][key]["key"] == str(res[i]["championId"])):
-                txt += "--------------------------\n"+"\033[1m"+(jsonchamps["data"][key]["name"])+"\033[0m"+"\n\033[4mMaestria\033[0m "+str(res[i]["championLevel"])+"\n\033[4mPontos de maestria:\033[0m "+str(res[i]["championPoints"])+"\033[4m\nBaú ganho:\033[0m "+str(res[i]["chestGranted"])+"\n--------------------------\n"
-    return(txt)
+                champs.append(jsonchamps["data"][key])
+
+    return [champ["key"] for champ in champs] if idC else champs
+
+def champById(idC):
+        #print(jsonchamps["data"].keys())
+        for champ in jsonchamps["data"].keys():
+            if str(idC) == jsonchamps["data"][champ]["key"]:
+                return champwatcher.Champion(jsonchamps["data"][champ])
