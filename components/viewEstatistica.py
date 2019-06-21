@@ -1,12 +1,12 @@
 from tkinter import *
 from PIL import Image, ImageTk
+import os
 from services import api_service, menu_service
 
-global bg
-bg = "#182422"
+bg = "Grey6"
 
-global fg
 fg = "#F3E171"
+
 
 class EstatisticasInvo:
     def __init__(self, invocador, key):
@@ -15,7 +15,7 @@ class EstatisticasInvo:
         self.root = Tk()
         self.root.title("League Viwer")
         self.root.resizable(False, False)
-        self.root.geometry("900x700")
+        self.root.geometry("900x650+220+20")
         self.root["background"] = bg
 
         #renderizar logo
@@ -39,9 +39,9 @@ class EstatisticasInvo:
         self.button.pack()
         self.button.place(x=30, y=20)
         self.back = Button(self.button, text="◄ VOLTAR", bg="Grey10", fg="Grey90", font=("Arial Black", "13", "bold",
-                                                                                        "italic"),
-                        bd=2, activebackground="Grey20", activeforeground="Grey90",
-                        relief="solid", height=1, width=15, command=self.close)
+                                                                                         "italic"),
+                           bd=2, activebackground="Grey20", activeforeground="Grey90", relief="solid", height=1,
+                           width=15, command=self.close, cursor="X_Cursor")
         self.back.pack()
         
         
@@ -68,20 +68,20 @@ class EstatisticasInvo:
         
         
     def renderMains(self):
-        self.mainsFrame = Frame(self.root,bg = bg, bd = 2, relief = SUNKEN)
+        self.mainsFrame = Frame(self.root, bg=bg, bd=3, relief="groove", highlightbackground="Grey90")
         self.mainsFrame.pack(side = LEFT,anchor = N)
         self.mainsFrame.place(x = 20, y = 150)
         
         #Titulo da janela
-        self.labelMains = Label(self.mainsFrame, text = "Estatisticas com os principais",fg =fg, bg = bg,
-                                    font = ("Verdana",15, "bold","italic","underline"))
-        self.labelMains.grid(row = 0,column = 0, columnspan = 3, padx = 20)
+        self.labelMains = Label(self.mainsFrame, text="Estatísticas com os principais", fg="Green Yellow", bg=bg,
+                                font=("Verdana", 15, "bold", "italic"))
+        self.labelMains.grid(row=0, column=0, columnspan=3, padx=20)
         
         for i in range(len(self.champsMain)):
             row = 1 + i*3
             champ = self.champsMain[i]
-            self.champFrame = Frame(self.mainsFrame,  width = 100, height = 100, bg = bg)
-            self.champFrame.grid(row = row, rowspan = 3, padx = 20, pady = 20)
+            self.champFrame = Frame(self.mainsFrame, width=100, height=100, bg=bg)
+            self.champFrame.grid(row=row, rowspan=3, padx=20, pady=15)
             #elf.champFrame.pack(side = LEFT,anchor = N)
             #self.champFrame.place(x = 20, y = y)
             
@@ -98,13 +98,13 @@ class EstatisticasInvo:
             self.licon.image = img
             self.licon.grid(row = 1, rowspan =2, sticky = W)
             
-            self.labelName = Label(self.champFrame, text = champ.name, font = ("Verdana", 15, "bold")
-                                    , fg = "white", bg =bg).grid(row = 1, column = 1, rowspan = 2, sticky = N)
+            self.labelName = Label(self.champFrame, text = champ.name, font=("Verdana", 15, "bold"),
+                                   fg="white", bg=bg).grid(row=1, column=1, rowspan=2, sticky=N)
             
             wl = self.lastMainMatches[champ.key]
-            txt = "Vitorias: "+str(wl[0])+"/Derrotas: "+str(wl[1])
-            self.winsLose = Label(self.champFrame, text = txt,font = ("Verdana", 15, "bold"),
-                                fg ="red", bg = bg).grid(row = 3, column = 0, columnspan = 3)
+            txt = "Vitórias: " + str(wl[0]) + " / Derrotas: " + str(wl[1])
+            self.winsLose = Label(self.champFrame, text=txt, font=("Verdana", 15, "bold"), fg="Firebrick2",
+                                  bg=bg).grid(row=3, column=0, columnspan=3, pady=10, padx=25)
             
         
         #ssself.splashC = api_service.getSplashByName(list(self.champsMost[self.champsMost.keys()[0]].name))
@@ -113,20 +113,20 @@ class EstatisticasInvo:
         
 
     def renderMost(self):
-        self.mostFrame = Frame(self.root,bg = bg, bd = 2, relief = SUNKEN)
+        self.mostFrame = Frame(self.root, bg=bg, bd=3, relief="groove", highlightbackground="Grey6")
         self.mostFrame.pack(side = LEFT,anchor = N)
         self.mostFrame.place(x = 450, y = 150)
         
         #Titulo da janela
-        self.labelMost = Label(self.mostFrame, text = "Estatisticas com os mais jogados",fg =fg, bg = bg,
-                                    font = ("Verdana",15, "bold","italic","underline"))
-        self.labelMost.grid(row = 0,column = 0, columnspan = 3, padx = 20)
+        self.labelMost = Label(self.mostFrame, text = "Estatísticas com os mais jogados", fg="Green Yellow", bg=bg,
+                               font=("Verdana", 15, "bold", "italic"))
+        self.labelMost.grid(row=0, column=0, columnspan=3, padx=20)
         
         for i in range(len(self.champsMost)):
             row = 1 + i*3
             champ = self.champsMost[i]
-            self.champFrame = Frame(self.mostFrame,  width = 100, height = 100, bg = bg)
-            self.champFrame.grid(row = row, rowspan = 3, padx = 20, pady = 20)
+            self.champFrame = Frame(self.mostFrame,  width=100, height=100, bg=bg)
+            self.champFrame.grid(row=row, rowspan=3, padx=20, pady=15)
             #elf.champFrame.pack(side = LEFT,anchor = N)
             #self.champFrame.place(x = 20, y = y)
             
@@ -147,13 +147,10 @@ class EstatisticasInvo:
                                     , fg = "white", bg =bg).grid(row = 1, column = 1, rowspan = 2, sticky = N)
             
             wl = self.lastMostMatches[champ.key]
-            txt = "Vitorias: "+str(wl[0])+"/Derrotas: "+str(wl[1])
-            self.winsLose = Label(self.champFrame, text = txt,font = ("Verdana", 15, "bold"),
-                                fg ="red", bg = bg).grid(row = 3, column = 0, columnspan = 3)
+            txt = "Vitórias: " + str(wl[0]) + " / Derrotas: " + str(wl[1])
+            self.winsLose = Label(self.champFrame, text=txt, font=("Verdana", 15, "bold"), fg="Firebrick2",
+                                  bg=bg).grid(row=3, column=0, columnspan=3, pady=10, padx=40)
         
     def close(self):
         self.root.destroy()
-        from components import menu
-        self.menuG = menu.MenuAut()
-        
-        
+        os.system("menu.py 1")

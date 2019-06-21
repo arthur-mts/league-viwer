@@ -1,6 +1,7 @@
 from tkinter import *
 from urllib.request import urlopen
 import io
+import os
 from PIL import ImageTk, Image
 from services.info import *
 from services.menu_service import *
@@ -20,36 +21,26 @@ colours = {"Fighter": "#933A16",
 answer = {True: "Sim", False: "Não"}
 colour = {True: "#50C878", False: "#CA3433"}
 
-# Chave
-key = get_key()
-
-# Nome
-name = get_name()
-
 
 class Screen:
 
     def __init__(self, master=None):
-
-        # Info
-        self.data = get_data()
-        self.array = get_array()
-        self.player = summonerByName(name, key)
-        self.update = update_info(self.player, self.data, self.array, key)
 
         # Janela
         self.window = Tk()
         self.window.title("League Viwer")
         self.window.resizable(False, False)
         self.window["background"] = "Grey6"
-        self.window.geometry("1060x690+145+0")
+        self.window.geometry("1030x650+170+20")
 
-        # Título
-        self.first = Frame(master)
-        self.first.pack()
-        self.title = Label(self.first, text="Campeões", fg="Grey90", bg="Grey6", font=("Arial Black", "30", "italic",
-                                                                                       "bold"))
-        self.title.pack()
+        # Logo
+        self.archive = Image.open("../src/img/lol_logo.png")
+        width, height = self.archive.size
+        self.archive = self.archive.resize((width // 2, height // 2), Image.ANTIALIAS)
+        self.photo = ImageTk.PhotoImage(self.archive)
+        show = Label(image=self.photo, bg="Grey6")
+        show.image = self.photo
+        show.pack()
 
         # Voltar
         self.button = Frame(master)
@@ -61,30 +52,44 @@ class Screen:
                            relief="solid", height=1, width=15, command=self.close)
         self.back.pack()
 
+        self.window.update()
+
+        # Info
+        self.key = get_key()
+        self.name = get_name()
+        self.data = get_data()
+        self.array = get_array()
+        self.player = summonerByName(self.name, self.key)
+        try:
+            self.data[self.player.name]
+        except:
+            update_info(self.player, self.key)
+        self.data = get_data()
+
         # Primeiro campeão
-        self.second = Frame(master, bg="Grey6")
-        self.second.pack()
-        self.second.place(x=410, y=110)
+        self.first = Frame(master, bg="Grey6")
+        self.first.pack()
+        self.first.place(x=370, y=150)
 
         # Segundo campeão
-        self.third = Frame(master, bg="Grey6")
-        self.third.pack()
-        self.third.place(x=410, y=310)
+        self.second = Frame(master, bg="Grey6")
+        self.second.pack()
+        self.second.place(x=370, y=310)
 
         # Terceiro campeão
-        self.fourth = Frame(master, bg="Grey6")
-        self.fourth.pack()
-        self.fourth.place(x=410, y=510)
+        self.third = Frame(master, bg="Grey6")
+        self.third.pack()
+        self.third.place(x=370, y=470)
 
         # Imagens, ícones e info
         for i in range(3):
             # Imagens e ícones
             self.x = 30
-            self.y = 80 if i == 0 else 280 if i == 1 else 480
+            self.y = 140 if i == 0 else 300 if i == 1 else 460
             self.render(i)
 
             # Info
-            self.frame = self.second if i == 0 else self.third if i == 1 else self.fourth
+            self.frame = self.first if i == 0 else self.second if i == 1 else self.third
             self.info(i)
         self.window.mainloop()
 
@@ -94,20 +99,20 @@ class Screen:
         link = urlopen(self.data[self.player.name][i]["Image"]).read()
         archive = Image.open(io.BytesIO(link))
         width, height = archive.size
-        archive = archive.resize((width // 4, height // 4), Image.ANTIALIAS)
+        archive = archive.resize((width // 5, height // 5), Image.ANTIALIAS)
         photo = ImageTk.PhotoImage(archive)
         show = Label(image=photo, bg="Grey26")
         show.image = photo
         show.place(x=self.x, y=self.y)
 
         # Ícones
-        archive = Image.open("../src/img/mastery_level_" + str(self.data[self.player.name][i]["Mastery"]) + ".png")
+        archive = Image.open("../src/img/mastery/mastery_level_" + str(self.data[self.player.name][i]["Mastery"]) + ".png")
         width, height = archive.size
         archive = archive.resize((width // 2, height // 2), Image.ANTIALIAS)
         photo = ImageTk.PhotoImage(archive)
         show = Label(image=photo, bg="Grey6")
         show.image = photo
-        show.place(x=self.x + 310, y=self.y + 60)
+        show.place(x=self.x + 260, y=self.y + 50)
 
     # Info
     def info(self, i):
@@ -127,8 +132,7 @@ class Screen:
     # Voltar
     def close(self):
         self.window.destroy()
-        from components.menu import MenuAut
-        MenuAut()
+        os.system("menu.py 1")
 
 
 Screen()
