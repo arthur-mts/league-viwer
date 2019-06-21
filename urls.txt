@@ -1,0 +1,17 @@
+URL PARA PEGAR ICONES:
+
+http://ddragon.leagueoflegends.com/cdn/9.11.1/img/profileicon/1355.png
+
+O http://ddragon.leagueoflegends.com/cdn/9.11.1/ RETORNA A PASTA COM OS CONTEUDOS DA VERSAO, OS MESMO QUE VC BAIXA NO SITE DA RIOT.
+
+DENTRO DESTA PASTA TEM
+/img
+/data
+/js
+
+O /data TEM OS DADOS DE TODAS AS REGIÕES, MAS VAMOS USAR O ptBR
+
+/data/pt_BR/
+
+ESSA PASTA TEM *TODOS* OS JSON NECESSARIOS, CAMPEOES, MAPA E ETC
+

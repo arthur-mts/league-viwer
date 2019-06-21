@@ -1,8 +1,15 @@
 class Summoner(object):
     def __init__(self, initial_dict):
-        for key in initial_dict:
+        for key in initial_dict.keys():
             setattr(self, key, initial_dict[key])
 
+#id
+#accountId
+#puuid
+#name
+#profileIconId
+#revisionDate
+#summonerLevel
 
 def SummonerToString(sumn):
     res = "Nome: "+sumn.name + "\nLevel: "+ str(sumn.summonerLevel)

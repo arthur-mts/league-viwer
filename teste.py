@@ -1,12 +1,12 @@
 from tkinter import *
-from tkinter import messagebox
 
-top = Tk()
 
-C = Canvas(top, bg="blue", height=250, width=300)
-filename = PhotoImage(file="/home/amts/Imagens/modk.png")
-background_label = Label(top, image=filename)
-background_label.place(x=0, y=0, relwidth=1, relheight=1)
+def funcao():
+    print("linda zapkkkk")
 
-C.pack()
-top.mainloop()
+
+root = Tk()
+frame = Frame(root)
+frame.pack()
+botao = Button(frame, text="kkkzap", command=funcao)
+root.mainloop()
