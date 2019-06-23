@@ -25,6 +25,6 @@ class Teste:
         self.painel.grid_rowconfigure(0, weight=1)
         self.painel.pack(anchor=W, fill=Y, expand=False, side=LEFT)
         self.root.update()
-
+        #teste
 
 
