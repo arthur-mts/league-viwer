@@ -37,16 +37,33 @@ class Teste:
         
         self.canvas.create_image(0,0, image = map, anchor = NW)
         
-        key = "RGAPI-00ed2745-5473-4c94-901a-3f010b1fc895"
+        key = "RGAPI-b6ef6146-0abb-4c08-918f-e801928516fa"
         inv = menu_service.summonerByName("0 Fígurante", key)
-        print(inv.id)
+        print(inv)
         
-        kills = api_service.getMatchStatus(key, inv)
+        matchD = api_service.getMatchStatus(key, inv)
+        kills=matchD[0]
+        
+        width, height = 14870,14880
+        
+        x, y = kills[0]["x"],kills[0]["y"]
+        
+        nx = (512*x)/width
+        ny = (512*y)/height
+        
+        self.create_point(nx, ny, self.canvas)
+        
         
         print(kills)
         
         
         self.root.mainloop()
         #teste
+        
+    def create_point(self, x,y, canvas):
+        x1, y1 = (x - 4), (y - 4)
+        x2, y2 = (x + 4), (y + 4)
+        canvas.create_oval(x1, y1, x2, y2, fill="blue")
+        
 Teste()
 
