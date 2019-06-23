@@ -35,7 +35,7 @@ class Teste:
         self.canvas.place(x = 10, y = 125)
         map = ImageTk.PhotoImage(Image.open('src/img/map.png'))
         
-        self.canvas.create_image(0,0, image = map, anchor = NW)
+        self.canvas.create_image(2,2, image = map, anchor = NW)
         
         key = "RGAPI-b6ef6146-0abb-4c08-918f-e801928516fa"
         inv = menu_service.summonerByName("0 Fígurante", key)
@@ -44,12 +44,12 @@ class Teste:
         matchD = api_service.getMatchStatus(key, inv)
         kills=matchD[0]
         
-        width, height = 14870,14880
+        maxx, maxy = 14870,14980
         
         x, y = kills[0]["x"],kills[0]["y"]
         
-        nx = (512*x)/width
-        ny = (512*y)/height
+        nx = (512*x)/maxx
+        ny = (512*y)/maxy
         
         self.create_point(nx, ny, self.canvas)
         
