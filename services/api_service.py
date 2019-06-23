@@ -153,4 +153,33 @@ def getIconByName(nameC):
     url = "https://ddragon.leagueoflegends.com/cdn/9.12.1/img/champion/"+nameC+".png"
     getImg = urllib.request.urlopen(url)
     return Image.open(getImg)
-    
+
+def getMatchStatus(key, inv):
+    matches = getLastMatches(inv.id, key)
+    matchSum = None
+    for match in matches:
+        if match["mapId"] == 11:
+            matchSum = match
+            break
+    if not matchSum:
+        return False
+    else:
+        idPlayerInMatch = None
+        for player in match["participantIdentities"]:
+            if player["player"]["summonerName"] == inv.name:
+                idPlayerInMatch = int(player["participantId"])
+                break
+        #100 para azul 200 para vermelho
+        team = match["participants"][idPlayerInMatch]["teamId"]
+        #timeline da partida capturado
+        timelines = requests.get("https://br1.api.riotgames.com/lol/match/v4/timelines/by-match/"+match["gameId"]+"?api_key="+key).json()
+        #criar dicionario com todas as kills do jogo {killer: idKiller, killed: idKilled
+        #, teamKilled: "blue/red", teamKilled: "blue/red", x: coordenadax, y: corrdy}
+        kills = []
+        for frame in timelines["frames"]:
+            for event in frame["events"]:
+                if event["type"] == "CHAMPION_KILL":   
+                    kill = {"x": event["position"]["x"],"y": event["position"]["y"]
+                            , "killerId": event["killerId"], "killedId": event["victimId"]}
+                    kills.append(kill)
+        return kills
