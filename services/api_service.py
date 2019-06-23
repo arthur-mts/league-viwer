@@ -155,13 +155,17 @@ def getIconByName(nameC):
     return Image.open(getImg)
 
 def getMatchStatus(key, inv):
-    matches = getLastMatches(inv.id, key)
-    matchSum = None
-    for match in matches:
-        if match["mapId"] == 11:
-            matchSum = match
+    #Pegar a ultima partida em summoners rift
+    match = None    
+    url = "https://br1.api.riotgames.com/lol/match/v4/matchlists/by-account/"+inv.accountId+"?endIndex=25&api_key="+key
+    res = requests.get(url).json()
+    for mat in res["matches"]:
+        urlMat = "https://br1.api.riotgames.com/lol/match/v4/matches/"+str(mat["gameId"])+"?api_key="+key 
+        resMat = requests.get(urlMat).json()
+        if resMat["mapId"] == 12:
+            match = resMat
             break
-    if not matchSum:
+    if not match:
         return False
     else:
         idPlayerInMatch = None
@@ -172,7 +176,7 @@ def getMatchStatus(key, inv):
         #100 para azul 200 para vermelho
         team = match["participants"][idPlayerInMatch]["teamId"]
         #timeline da partida capturado
-        timelines = requests.get("https://br1.api.riotgames.com/lol/match/v4/timelines/by-match/"+match["gameId"]+"?api_key="+key).json()
+        timelines = requests.get("https://br1.api.riotgames.com/lol/match/v4/timelines/by-match/"+str(match["gameId"])+"?api_key="+key).json()
         #criar dicionario com todas as kills do jogo {killer: idKiller, killed: idKilled
         #, teamKilled: "blue/red", teamKilled: "blue/red", x: coordenadax, y: corrdy}
         kills = []
@@ -182,4 +186,4 @@ def getMatchStatus(key, inv):
                     kill = {"x": event["position"]["x"],"y": event["position"]["y"]
                             , "killerId": event["killerId"], "killedId": event["victimId"]}
                     kills.append(kill)
-        return kills
+        return [kills, team, idPlayerInMatch]

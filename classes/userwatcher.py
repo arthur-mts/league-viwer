@@ -1,6 +1,7 @@
 class Summoner(object):
     def __init__(self, initial_dict):
         for key in initial_dict.keys():
+            print(key)
             setattr(self, key, initial_dict[key])
 
 #id
