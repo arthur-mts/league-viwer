@@ -173,17 +173,37 @@ def getMatchStatus(key, inv):
             if player["player"]["summonerName"] == inv.name:
                 idPlayerInMatch = int(player["participantId"])
                 break
-        #100 para azul 200 para vermelho
-        team = match["participants"][idPlayerInMatch]["teamId"]
-        #timeline da partida capturado
+        # 100 para azul 200 para vermelho
+
+        team = match["participants"][idPlayerInMatch - 1]["teamId"]
+        won = match["participants"][idPlayerInMatch - 1]["stats"]["win"]
+        gold_spent = match["participants"][idPlayerInMatch - 1]["stats"]["goldSpent"]
+        gold_earned = match["participants"][idPlayerInMatch - 1]["stats"]["goldEarned"]
+        killed = match["participants"][idPlayerInMatch - 1]["stats"]["kills"]
+        died = match["participants"][idPlayerInMatch - 1]["stats"]["deaths"]
+        assisted = match["participants"][idPlayerInMatch - 1]["stats"]["assists"]
+        result = "{}/{}/{}".format(killed, died, assisted)
+        minions = match["participants"][idPlayerInMatch - 1]["stats"]["totalMinionsKilled"]
+        neutral = match["participants"][idPlayerInMatch - 1]["stats"]["neutralMinionsKilled"]
+        champion = get_champion(match["participants"][idPlayerInMatch - 1]["championId"])
+
+        # Timeline da partida capturado
         timelines = requests.get("https://br1.api.riotgames.com/lol/match/v4/timelines/by-match/"+str(match["gameId"])+"?api_key="+key).json()
-        #criar dicionario com todas as kills do jogo {killer: idKiller, killed: idKilled
-        #, teamKilled: "blue/red", teamKilled: "blue/red", x: coordenadax, y: corrdy}
+
+        # Criar dicionário com todas as kills do jogo {killer: idKiller, killed: idKilled
+        # , teamKilled: "blue/red", teamKilled: "blue/red", x: coordenadax, y: corrdy}
         kills = []
         for frame in timelines["frames"]:
             for event in frame["events"]:
                 if event["type"] == "CHAMPION_KILL":   
-                    kill = {"x": event["position"]["x"],"y": event["position"]["y"]
+                    kill = {"x": event["position"]["x"], "y": event["position"]["y"]
                             , "killerId": event["killerId"], "killedId": event["victimId"]}
                     kills.append(kill)
-        return [kills, team, idPlayerInMatch]
+        return [kills, team, idPlayerInMatch, won, gold_spent, gold_earned, result, minions, neutral, champion]
+
+
+def get_champion(number):
+    champions = requests.get("http://ddragon.leagueoflegends.com/cdn/9.11.1/data/pt_BR/champion.json").json()
+    for name in champions["data"].keys():
+        if str(number) == champions["data"][name]["key"]:
+            return champions["data"][name]["name"]

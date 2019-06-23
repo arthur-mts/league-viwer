@@ -31,7 +31,7 @@ class Screen:
         self.window.title("League Viwer")
         self.window.resizable(False, False)
         self.window["background"] = "Grey6"
-        self.window.geometry("1030x650+170+20")
+        self.window.geometry("1070x650+140+20")
 
         # Logo
         self.archive = Image.open("../src/img/lol_logo.png")

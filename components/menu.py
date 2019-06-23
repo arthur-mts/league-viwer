@@ -177,6 +177,7 @@ class MenuAut:
                              font=("Arial", "13", "bold"), activebackground="Grey20", activeforeground="Grey90", bd=3,
                              relief="solid", cursor="X_Cursor")
         self.botao3.grid(column=0, row=2, pady=15)
+        self.botao3["command"] = self.render_map
 
         self.botao4 = Button(self.boxBotoes, text="Ranking", bg="Grey10", fg="OliveDrab1", height=2, width=25,
                              font=("Arial", "13", "bold"), activebackground="Grey20", activeforeground="Grey90", bd=3,
@@ -197,6 +198,10 @@ class MenuAut:
     def render_champions(self):
         self.root.destroy()
         os.system("champions.py 1")
+
+    def render_map(self):
+        self.root.destroy()
+        os.system("map.py 1")
         
         
 MenuAut(loop=False)
