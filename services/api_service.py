@@ -162,7 +162,7 @@ def getMatchStatus(key, inv):
     for mat in res["matches"]:
         urlMat = "https://br1.api.riotgames.com/lol/match/v4/matches/"+str(mat["gameId"])+"?api_key="+key 
         resMat = requests.get(urlMat).json()
-        if resMat["mapId"] == 12:
+        if resMat["mapId"] == 11:
             match = resMat
             break
     if not match:

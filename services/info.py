@@ -50,10 +50,15 @@ def update_info(player, key):
 
 # Pegar dados dos campeões
 def get_data():
-    with open("../src/dados/champions.json", "r") as file:
-        data = json.load(file)
-        file.close()
-    return data
+    try:
+        with open("../src/dados/champions.json", "r") as file:
+            data = json.load(file)
+            file.close()
+        return data
+    except:
+        with open("../src/dados/champions.json", "w") as file:
+            file.write("{}")
+            file.close()
 
 
 # Pegar nome do invocador
@@ -67,10 +72,15 @@ def get_name():
 
 # Pegar IDs dos campeões mais jogados
 def get_array():
-    with open("../src/dados/IDs.json", "r") as file:
-        array = json.load(file)
-        file.close()
-    return array
+    try:
+        with open("../src/dados/IDs.json", "r") as file:
+            array = json.load(file)
+            file.close()
+        return array
+    except:
+        with open("../src/dados/IDs.json", "w") as file:
+            file.write("{}")
+            file.close()
 
 
 # Pegar chave de acesso
