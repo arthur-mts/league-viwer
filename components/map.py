@@ -70,7 +70,13 @@ class Map:
         kills = match[0]
         
         maxx, maxy = 14870, 14980
-
+      
+        
+        iconChamp = api_service.getIconByName(match[9])
+        
+        width, height = iconChamp.size
+        iconChamp = ImageTk.PhotoImage(iconChamp.resize((width // 2, height // 2), Image.ANTIALIAS))
+        
         colourplayer = {100: "DeepSkyBlue3",
                         200: "Firebrick4"}
 
@@ -87,47 +93,52 @@ class Map:
             y = 512 - ((512 * y) / maxy)
         
             self.create_point(x, y, self.canvas, colour)
-
+            
+      
+        # Icone do campeão
+        labelIcon = Label(self.data, bg = bg, image = iconChamp)
+        labelIcon.image = iconChamp
+        labelIcon.grid(row = 0, column = 0, pady = 10)
+      
+        # Nome do champ
+        Label(self.data, text=match[9], font=("Arial", "14", "bold", "italic"), bg=bg,
+              fg="OliveDrab2").grid(row=0, column=1, pady = 10)
+        
         # Nome do invocador
-        Label(self.data, text="Nome:", font=("Arial", "14", "bold", "italic"), bg=bg, fg="PaleGreen3").grid(sticky=W)
+        Label(self.data, text="Nome:", font=("Arial", "14", "bold", "italic"), bg=bg, fg="PaleGreen3").grid(sticky=W, row =1, column =0)
         Label(self.data, text=summoner.name, font=("Arial", "14", "bold", "italic"), bg=bg,
-              fg=colourplayer[match[1]]).grid(row=0, column=1, pady=10)
+              fg=colourplayer[match[1]]).grid(row=1, column=1, pady=10)
 
         # Eliminações, mortes e assistências
         Label(self.data, text="AMA:", font=("Arial", "14", "bold", "italic"), bg=bg,
-              fg="PaleGreen3").grid(row=1, sticky=W, pady=10)
+              fg="PaleGreen3").grid(row=2, sticky=W, pady=10)
         Label(self.data, text=match[6], font=("Arial", "14", "bold", "italic"), bg=bg,
-              fg="MediumPurple1").grid(row=1, column=1)
+              fg="MediumPurple1").grid(row=2, column=1)
 
         # Ouro gasto
         Label(self.data, text="Ouro gasto:", font=("Arial", "14", "bold", "italic"), bg=bg,
-              fg="PaleGreen3").grid(row=2, sticky=W, pady=10)
+              fg="PaleGreen3").grid(row=3, sticky=W, pady=10)
         Label(self.data, text=match[4], font=("Arial", "14", "bold", "italic"), bg=bg,
-              fg="DarkOrange3").grid(row=2, column=1)
+              fg="DarkOrange3").grid(row=3, column=1)
 
         # Ouro recebido
         Label(self.data, text="Ouro recebido:", font=("Arial", "14", "bold", "italic"), bg=bg,
-              fg="PaleGreen3").grid(row=3, sticky=W, pady=10)
+              fg="PaleGreen3").grid(row=4, sticky=W, pady=10)
         Label(self.data, text=match[5], font=("Arial", "14", "bold", "italic"), bg=bg,
-              fg="DarkOrange3").grid(row=3, column=1)
+              fg="DarkOrange3").grid(row=4, column=1)
 
         # Tropas abatidas
         Label(self.data, text="Tropas abatidas:", font=("Arial", "14", "bold", "italic"), bg=bg,
-              fg="PaleGreen3").grid(row=4, sticky=W, pady=10)
+              fg="PaleGreen3").grid(row=5, sticky=W, pady=10)
         Label(self.data, text=match[7], font=("Arial", "14", "bold", "italic"), bg=bg,
-              fg="DarkOrange3").grid(row=4, column=1)
+              fg="DarkOrange3").grid(row=5, column=1)
 
         # Monstros neutros abatidos
         Label(self.data, text="Monstros abatidos:", font=("Arial", "14", "bold", "italic"), bg=bg,
-              fg="PaleGreen3").grid(row=5, sticky=W, pady=10)
-        Label(self.data, text=match[8], font=("Arial", "14", "bold", "italic"), bg=bg,
-              fg="DarkOrange3").grid(row=5, column=1)
-
-        # Campeão
-        Label(self.data, text="Campeão:", font=("Arial", "14", "bold", "italic"), bg=bg,
               fg="PaleGreen3").grid(row=6, sticky=W, pady=10)
-        Label(self.data, text=match[9], font=("Arial", "14", "bold", "italic"), bg=bg,
-              fg="OliveDrab2").grid(row=6, column=1)
+        Label(self.data, text=match[8], font=("Arial", "14", "bold", "italic"), bg=bg,
+              fg="DarkOrange3").grid(row=6, column=1)
+
 
         Label(text=result[match[3]], font=("Arial", "30", "bold", "italic"), bg=bg,
               fg=result_colour[match[3]]).place(x=625, y=530)
