@@ -37,7 +37,8 @@ class Map:
         self.back = Button(self.button, text="◄ VOLTAR", bg="Grey10", fg="Grey90", font=("Arial Black", "13", "bold",
                                                                                          "italic"),
                            bd=2, activebackground="Grey20", activeforeground="Grey90", relief="solid", height=1,
-                           width=15, command=self.close, cursor="X_Cursor")
+                           width=15, command=self.close)
+        #, cursor="X_Cursor"
         self.back.pack()
         self.root.update()
 
@@ -77,18 +78,19 @@ class Map:
         width, height = iconChamp.size
         iconChamp = ImageTk.PhotoImage(iconChamp.resize((width // 2, height // 2), Image.ANTIALIAS))
         
-        colourplayer = {100: "DeepSkyBlue3",
-                        200: "Firebrick4"}
-
+        colourplayer = {100: "Blue",
+                        200: "Red"}
+        
         result = {True: "Vitória!",
                   False: "Derrota!"}
+        
         result_colour = {True: "RoyalBlue3",
                          False: "Firebrick2"}
 
         for i in range(len(kills)):
             x, y = kills[i]["x"], kills[i]["y"]
             killer = kills[i]["killerId"]
-            colour = colourplayer[match[1]] if killer == match[2] else "Blue" if killer <= 5 else "Red"
+            colour = "OliveDrab2" if killer == match[2] else "Blue" if killer <= 5 else "Red"
             x = (512 * x) / maxx
             y = 512 - ((512 * y) / maxy)
         
