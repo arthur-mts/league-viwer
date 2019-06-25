@@ -52,6 +52,15 @@ class Screen:
                            relief="solid", height=1, width=15, command=self.close)
         self.back.pack()
 
+        # Loading
+        icon = Image.open("../src/img/loading.png")
+        width, height = icon.size
+        icon = icon.resize((width // 6, height // 6), Image.ANTIALIAS)
+        self.loading = ImageTk.PhotoImage(icon)
+        self.photo = Label(image=self.loading, bg="Grey6")
+        self.photo.image = self.loading
+        self.photo.pack(pady=150)
+
         self.window.update()
 
         # Info
@@ -65,6 +74,8 @@ class Screen:
         except:
             update_info(self.player, self.key)
         self.data = get_data()
+
+        self.photo.destroy()
 
         # Primeiro campeão
         self.first = Frame(master, bg="Grey6")

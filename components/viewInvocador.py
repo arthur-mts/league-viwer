@@ -31,9 +31,8 @@ class InfoInvocador:
         self.root.resizable(False, False)
         self.root.geometry("900x650+220+20")
         self.root["background"] = bg
-        self.root.update()
 
-        # Renderizar logo
+        # Logo
         self.container = Frame(self.root, bg=bg)
         self.container.pack(side=TOP)
         # self.container.place(x = 340, y = 0)
@@ -44,29 +43,17 @@ class InfoInvocador:
         self.painel = Label(self.container, image=self.logoImg, bg=bg)
         self.painel.image = self.logoImg
         self.painel.pack(anchor=W, fill=Y, side=TOP)
-        
-        if len(self.queueList) == 0:
-            self.labelErro = Label(self.root,
-                                   text="Sem dados suficientes!\nJogue partidas ranqueadas e volte mais tarde!",
-                                   fg="Goldenrod2", bg=bg, font=("Verdana", 20, "bold"))
 
-            # self.labelErro.grid(column = 2, row = 1, columnspan = 2)
-            self.labelErro.pack(pady=50)
-        elif len(self.queueList) == 1:
-            self.renderQueue(self.queueList[0], TOP)
-            self.x = 345
-            self.y = 500
-            self.render_icons(self.queueList[0])
-        else:
-            self.renderQueue(self.queueList[0], LEFT)
-            self.renderQueue(self.queueList[1], RIGHT)
-            self.x = 80
-            self.y = 460
-            self.render_icons(self.queueList[0])
-            self.x = 615
-            self.y = 460
-            self.render_icons(self.queueList[1])
+        # Loading
+        icon = Image.open("../src/img/loading.png")
+        width, height = icon.size
+        icon = icon.resize((width // 6, height // 6), Image.ANTIALIAS)
+        self.loading = ImageTk.PhotoImage(icon)
+        self.photo = Label(image=self.loading, bg="Grey6")
+        self.photo.image = self.loading
+        self.photo.pack(pady=150)
 
+        # Voltar
         self.button = Frame(self.root)
         self.button.pack()
         self.button.place(x=30, y=20)
@@ -75,6 +62,33 @@ class InfoInvocador:
                            activebackground="Grey20", activeforeground="Grey90", relief="solid", height=1, width=15,
                            command=self.close, cursor="X_Cursor")
         self.back.pack()
+
+        self.root.update()
+        
+        if len(self.queueList) == 0:
+            self.photo.destroy()
+            self.labelErro = Label(self.root,
+                                   text="Sem dados suficientes!\nJogue partidas ranqueadas e volte mais tarde!",
+                                   fg="Goldenrod2", bg=bg, font=("Verdana", 20, "bold"))
+
+            # self.labelErro.grid(column = 2, row = 1, columnspan = 2)
+            self.labelErro.pack(pady=50)
+        elif len(self.queueList) == 1:
+            self.photo.destroy()
+            self.renderQueue(self.queueList[0], TOP)
+            self.x = 345
+            self.y = 500
+            self.render_icons(self.queueList[0])
+        else:
+            self.photo.destroy()
+            self.renderQueue(self.queueList[0], LEFT)
+            self.renderQueue(self.queueList[1], RIGHT)
+            self.x = 100
+            self.y = 460
+            self.render_icons(self.queueList[0])
+            self.x = 595
+            self.y = 460
+            self.render_icons(self.queueList[1])
 
     def close(self):
         self.root.destroy()
@@ -93,7 +107,7 @@ class InfoInvocador:
         numVD = str(queue["wins"])+"/"+str(queue["losses"])
 
         Label(self.frameQueue, text=queue["queueType"].replace("_", " ").title().replace("X", "x"), pady=8, bg=bg,
-              fg=fg, font=("Verdana", 20, "bold", "italic")).grid(column=0, row=0, columnspan=2)
+              fg="Gainsboro", font=("Verdana", 20, "bold", "italic")).grid(column=0, row=0, columnspan=2)
 
         Label(self.frameQueue, text=leagueName, bg=bg, fg="DarkOliveGreen2",
               font=("Verdana", 20, "bold")).grid(column=0, row=1, columnspan=2)
@@ -101,27 +115,28 @@ class InfoInvocador:
         self.divis = Frame(self.frameQueue, bg=bg)
         self.divis.grid(row=2, columnspan=2)
         # Label(self.frameQueue, text = "Divisão: ", bg = bg, fg = fg, font  = ("Verdana",15)).grid(column = 0, row = 2)
-        Label(self.divis, text="Divisão: ", bg=bg, fg="Tan1", font=("Verdana", 15)).pack(anchor=CENTER, side=LEFT)
+        Label(self.divis, text="Divisão: ", bg=bg, fg="Light Blue", font=("Verdana", 15)).pack(anchor=CENTER, side=LEFT)
 
         # self.labelElo = Label(self.frameQueue, text = elo, bg = bg, fg = fg,font = ("Verdana",15, "bold"), pady = 10)
         # self.labelElo.grid(column = 1, row = 2)
-        self.labelElo = Label(self.divis, text=elo, bg=bg, fg=fg, font=("Verdana", 15, "bold"), pady=20)
+        self.labelElo = Label(self.divis, text=elo, bg=bg, fg="Medium Aquamarine", font=("Verdana", 15, "bold"),
+                              pady=20)
         self.labelElo.pack(anchor=CENTER, side=LEFT)
 
         self.pdlFrame = Frame(self.frameQueue, bg=bg)
         self.pdlFrame.grid(row=3, columnspan=2)
 
-        Label(self.pdlFrame, text="Pontos de Liga: ", bg=bg, fg="Tan1", font=("Verdana", 15)).pack(anchor=CENTER,
+        Label(self.pdlFrame, text="Pontos de Liga: ", bg=bg, fg="Light Blue", font=("Verdana", 15)).pack(anchor=CENTER,
                                                                                                    side=LEFT)
-        Label(self.pdlFrame, text=pdl, bg=bg, fg=fg, font=("Verdana", 15, "bold"), pady=15).pack(anchor=CENTER,
-                                                                                                 side=LEFT)
+        Label(self.pdlFrame, text=pdl, bg=bg, fg="Medium Aquamarine", font=("Verdana", 15, "bold"),
+              pady=15).pack(anchor=CENTER, side=LEFT)
 
         self.winLoseFrame = Frame(self.frameQueue, bg=bg)
         self.winLoseFrame.grid(row=4, columnspan=2)
-        Label(self.winLoseFrame, text="Vitórias / Derrotas: ", bg=bg, fg="Tan1",
+        Label(self.winLoseFrame, text="Vitórias / Derrotas: ", bg=bg, fg="Light Blue",
               font=("Verdana", 15)).pack(anchor=CENTER, side=LEFT)
-        Label(self.winLoseFrame, text=numVD, bg=bg, fg=fg, font=("Verdana", 15, "bold"), pady=15).pack(anchor=CENTER,
-                                                                                                       side=LEFT)
+        Label(self.winLoseFrame, text=numVD, bg=bg, fg="Medium Aquamarine", font=("Verdana", 15, "bold"),
+              pady=15).pack(anchor=CENTER, side=LEFT)
 
     def render_icons(self, queue):
         # Ícones

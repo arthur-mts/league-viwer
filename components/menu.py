@@ -33,6 +33,15 @@ class MenuAut:
         self.painel.grid_columnconfigure(0, weight=1)
         self.painel.grid_rowconfigure(0, weight=1)
         self.painel.pack(anchor=W, fill=Y, expand=False, side=LEFT)
+
+        icon = Image.open("../src/img/loading.png")
+        width, height = icon.size
+        icon = icon.resize((width // 6, height // 6), Image.ANTIALIAS)
+        self.loading = ImageTk.PhotoImage(icon)
+        self.photo = Label(image=self.loading, bg=bg)
+        self.photo.image = self.loading
+        self.photo.pack(pady=200)
+
         self.root.update()
 
         try:
@@ -44,8 +53,10 @@ class MenuAut:
 
         if self.validado:
             self.key = self.arquivo["senha"]
+            self.photo.destroy()
             self.renderOpcoes()
         else:
+            self.photo.destroy()
             self.renderAutenticar()
 
         if not loop:
