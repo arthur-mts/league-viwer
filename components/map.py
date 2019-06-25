@@ -37,8 +37,8 @@ class Map:
         self.back = Button(self.button, text="◄ VOLTAR", bg="Grey10", fg="Grey90", font=("Arial Black", "13", "bold",
                                                                                          "italic"),
                            bd=2, activebackground="Grey20", activeforeground="Grey90", relief="solid", height=1,
-                           width=15, command=self.close)
-        #, cursor="X_Cursor"
+                           width=15, command=self.close, cursor="X_Cursor")
+        
         self.back.pack()
         self.root.update()
 
